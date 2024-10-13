@@ -49,6 +49,3 @@ The project follows the guidelines provided by the instructor:
 - **Design Pattern**: POM (Page Object Model)
 - **Project Management Tool**: Maven
 - **Bonus**: Allure Reports
-
-## Project Submission
-All project-related materials, including the manual test cases, automation scripts, and the final test summary report, will be submitted on the **Final Projects tab** on the Microsoft Teams application.
