@@ -144,7 +144,7 @@ public class LoginTests
         loginPage.clickTwitterButton();
 
         String twitterUrl = loginPage.getTwitterPageUrl();
-        Assert.assertTrue(twitterUrl.contains("twitter.com"), "The Twitter page URL is incorrect!");
+        Assert.assertTrue(twitterUrl.contains("x.com"), "The Twitter page URL is incorrect!");
 
         loginPage.switchBackToOriginalWindow(originalWindow);
     }
