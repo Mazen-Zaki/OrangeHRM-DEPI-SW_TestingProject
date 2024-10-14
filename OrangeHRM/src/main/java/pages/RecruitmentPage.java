@@ -60,7 +60,7 @@ public class RecruitmentPage {
         this.driver = driver;
     }
 
-    // Method to login as Admin
+    //// Method to login as Admin
     public void loginAsAdmin(String username, String password) {
         WebElement usernameField = driver.findElement(usernameLocator);
         usernameField.clear();
