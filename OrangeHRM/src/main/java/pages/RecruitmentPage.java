@@ -176,7 +176,7 @@ public class RecruitmentPage {
         return driver.findElements(emailErrorLocator).size() > 0;
     }
 
-    // Method to check if email format error message is displayed
+    //// Method to check if email format error message is displayed
     public boolean isEmailFormatErrorDisplayed() {
         return driver.findElements(emailFormatErrorLocator).size() > 0;
     }
