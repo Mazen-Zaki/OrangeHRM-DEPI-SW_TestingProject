@@ -1,5 +1,5 @@
 package pages;
 
-public class AdminPage
-{
+public class AdminPage {
 }
+// test
