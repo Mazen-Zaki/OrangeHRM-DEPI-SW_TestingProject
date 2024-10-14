@@ -186,7 +186,7 @@ public class RecruitmentPage {
     // return driver.findElements(consentErrorLocator).size() > 0;
     // }
 
-    // Method to check if form is reset
+    //// Method to check if form is reset
     public boolean isFormReset() {
         return driver.findElement(firstNameLocator).getAttribute("value").isEmpty() &&
                 driver.findElement(emailLocator).getAttribute("value").isEmpty();
