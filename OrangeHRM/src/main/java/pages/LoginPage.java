@@ -1,30 +1,37 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import java.util.Set;
 
-public class LoginPage {
+public class LoginPage
+{
     WebDriver driver;
 
     // Define locators for elements on the login page
     By usernameField = By.name("username");
     By passwordField = By.name("password");
     By loginButton = By.xpath("//button[@type=\"submit\"]");
-    By linkedInButton = By.xpath("//a[@href=\"https://www.linkedin.com/company/orangehrm/mycompany/\"]"); // Locator for LinkedIn button
-    By facebookButton = By.xpath("//a[@href=\"https://www.facebook.com/OrangeHRM/\"]"); // Locator for LinkedIn button
-    By twitterButton = By.xpath("//a[@href=\"https://twitter.com/orangehrm?lang=en\"]"); // Locator for LinkedIn button
-    By youtubeButton = By.xpath("//a[@href=\"https://www.youtube.com/c/OrangeHRMInc\"]"); // Locator for LinkedIn button
 
+    By linkedInButton = By.xpath("//a[@href=\"https://www.linkedin.com/company/orangehrm/mycompany/\"]");   // Locator for LinkedIn button                                                                                        // button
+    By facebookButton = By.xpath("//a[@href=\"https://www.facebook.com/OrangeHRM/\"]");                     // Locator for facebook button
+    By twitterButton = By.xpath("//a[@href=\"https://twitter.com/orangehrm?lang=en\"]");                    // Locator for twitter button
+    By youtubeButton = By.xpath("//a[@href=\"https://www.youtube.com/c/OrangeHRMInc\"]");
+
+    By forgotPasswordButton = By.xpath("//p[contains(@class, 'orangehrm-login-forgot-header')]");
+    By resetPasswordButton = By.xpath("//button[@type=\"submit\"]");
+    By cancelButton = By.xpath("//button[@class='oxd-button oxd-button--large oxd-button--ghost orangehrm-forgot-password-button orangehrm-forgot-password-button--cancel']");
+
+    By resetPasswordSuccessfullyMessage = By.xpath("//h6[@class='oxd-text oxd-text--h6 orangehrm-forgot-password-title']");
 
     // Element
 
-
     // Constructor
-    public LoginPage(WebDriver driver)
-    {
+    public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -32,7 +39,6 @@ public class LoginPage {
     public void enterUsername(String username)
     {
         WebElement usernameElement = driver.findElement(usernameField);
-        usernameElement.clear();
         usernameElement.sendKeys(username);
     }
 
@@ -40,7 +46,6 @@ public class LoginPage {
     public void enterPassword(String password)
     {
         WebElement passwordElement = driver.findElement(passwordField);
-        passwordElement.clear();
         passwordElement.sendKeys(password);
     }
 
@@ -58,14 +63,12 @@ public class LoginPage {
         WebElement linkedInButtonElement = driver.findElement(linkedInButton);
         linkedInButtonElement.click();
 
-        // Switch to the new window or tab
-        Set<String> allWindows = driver.getWindowHandles();
-        for (String windowHandle : allWindows) {
-            if (!windowHandle.equals(originalWindow)) {
-                driver.switchTo().window(windowHandle);
-                break;
-            }
-        }
+
+        Set<String> windowHandles = driver.getWindowHandles();
+        windowHandles.remove(originalWindow);
+
+        String newTabHandle = windowHandles.iterator().next();
+        driver.switchTo().window(newTabHandle);
     }
 
     public void clickFacebookButton()
@@ -74,13 +77,11 @@ public class LoginPage {
         WebElement facebookButtonElement = driver.findElement(facebookButton);
         facebookButtonElement.click();
 
-        Set<String> allWindows = driver.getWindowHandles();
-        for (String windowHandle : allWindows) {
-            if (!windowHandle.equals(originalWindow)) {
-                driver.switchTo().window(windowHandle);
-                break;
-            }
-        }
+        Set<String> windowHandles = driver.getWindowHandles();
+        windowHandles.remove(originalWindow);
+
+        String newTabHandle = windowHandles.iterator().next();
+        driver.switchTo().window(newTabHandle);
     }
 
     public void clickTwitterButton()
@@ -89,55 +90,74 @@ public class LoginPage {
         WebElement twitterButtonElement = driver.findElement(twitterButton);
         twitterButtonElement.click();
 
-        Set<String> allWindows = driver.getWindowHandles();
-        for (String windowHandle : allWindows) {
-            if (!windowHandle.equals(originalWindow)) {
-                driver.switchTo().window(windowHandle);
-                break;
-            }
-        }
+        Set<String> windowHandles = driver.getWindowHandles();
+        windowHandles.remove(originalWindow);
+
+        String newTabHandle = windowHandles.iterator().next();
+        driver.switchTo().window(newTabHandle);
     }
 
+    // validate that YouTube button working correctly
     public void clickYoutubeButton()
     {
         String originalWindow = driver.getWindowHandle();
         WebElement youtubeButtonElement = driver.findElement(youtubeButton);
         youtubeButtonElement.click();
 
-        Set<String> allWindows = driver.getWindowHandles();
-        for (String windowHandle : allWindows) {
-            if (!windowHandle.equals(originalWindow)) {
-                driver.switchTo().window(windowHandle);
-                break;
-            }
+        Set<String> windowHandles = driver.getWindowHandles();
+        windowHandles.remove(originalWindow);
+
+        String newTabHandle = windowHandles.iterator().next();
+        driver.switchTo().window(newTabHandle);
+    }
+
+    public void clickForgotPasswordButton()
+    {
+        WebElement forgotPasswordButtonElement = driver.findElement(forgotPasswordButton);
+        forgotPasswordButtonElement.click();
+    }
+
+    public void clickResetPasswordButton()
+    {
+        WebElement forgotPasswordButtonElement = driver.findElement(resetPasswordButton);
+        forgotPasswordButtonElement.click();
+    }
+
+    public Boolean isResetPasswordSuccessfullyMessageShown()
+    {
+        try
+        {
+            WebElement successMessage = driver.findElement(resetPasswordSuccessfullyMessage);
+            return true;
+        }
+        catch (NoSuchElementException e)
+        {
+            // If NoSuchElementException is caught, the test should pass
+             return false;
         }
     }
 
-
-
-    // Method to get the URL of the current page
-    public String getPageUrl()
+    public void clickCancelButton()
     {
-        return driver.getCurrentUrl();
+        WebElement forgotPasswordButtonElement = driver.findElement(cancelButton);
+        forgotPasswordButtonElement.click();
     }
+
 
     // Method to get the LinkedIn page URL after redirection
     public String getLinkedInPageUrl() {
         return driver.getCurrentUrl();
     }
 
-    public String getFacebookPageUrl()
-    {
+    public String getFacebookPageUrl() {
         return driver.getCurrentUrl();
     }
 
-    public String getTwitterPageUrl()
-    {
+    public String getTwitterPageUrl() {
         return driver.getCurrentUrl();
     }
 
-    public String getYoutubePageUrl()
-    {
+    public String getYoutubePageUrl() {
         return driver.getCurrentUrl();
     }
 
