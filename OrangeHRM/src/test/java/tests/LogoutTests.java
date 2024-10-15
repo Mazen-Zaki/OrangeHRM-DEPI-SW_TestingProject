@@ -9,7 +9,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.LoginPage;
 import pages.LogoutPage;
 
 import java.time.Duration;
@@ -48,7 +47,7 @@ public class LogoutTests
         wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton));
 
         logoutPage.clickUserDropDownButton();
-        logoutPage.clickLogoutButtonButton();
+        logoutPage.clickLogoutButton();
 
         Assert.assertTrue(driver.getCurrentUrl().contains("login"));
     }

@@ -34,7 +34,7 @@ public class LogoutPage
         userDropDownButtonElement.click();
     }
 
-    public void clickLogoutButtonButton()
+    public void clickLogoutButton()
     {
         WebElement logoutButtonElement = driver.findElement(logoutButton);
         logoutButtonElement.click();
