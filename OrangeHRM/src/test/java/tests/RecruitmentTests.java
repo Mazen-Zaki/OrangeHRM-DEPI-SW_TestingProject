@@ -40,15 +40,16 @@ public class RecruitmentTests {
         recruitmentPage.enterLastName("Medhat");
         recruitmentPage.enterEmail("adham@test.com");
         recruitmentPage.enterContactNumber("1234567890");
-        // recruitmentPage.uploadResume("path/to/resume.pdf");
+        recruitmentPage.uploadResume("C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\Software Testing Project Guidelines - DEPI 1.pdf"); // Updated resume upload
+        recruitmentPage.selectVacancy("Software Engineer"); // Select vacancy from dropdown
         recruitmentPage.enterKeywords("Selenium, Testing");
-        // recruitmentPage.enterDateOfApplication("2024-10-14");
+        recruitmentPage.enterDateOfApplication("2024-10-14"); // Updated date format
         recruitmentPage.enterNotes("Testing candidate addition");
-        // recruitmentPage.checkConsent();
+        recruitmentPage.checkConsent();
         recruitmentPage.clickSave();
 
         // Assert success message is displayed
-        // Assert.assertTrue(recruitmentPage.isSuccessMessageDisplayed(), "Success");
+        Assert.assertTrue(recruitmentPage.isSuccessMessageDisplayed(), "Success message not displayed!");
     }
 
     // Test case: Verify adding a new candidate with missing required fields
@@ -67,10 +68,8 @@ public class RecruitmentTests {
         recruitmentPage.clickSave();
 
         // Assert that error messages for required fields are displayed
-        // Assert.assertTrue(recruitmentPage.isFirstNameErrorDisplayed(), "First name
-        // error message not displayed!");
-        // Assert.assertTrue(recruitmentPage.isEmailErrorDisplayed(), "Email error
-        // message not displayed!");
+        Assert.assertTrue(recruitmentPage.isFirstNameErrorDisplayed(), "First name error message not displayed!");
+        Assert.assertTrue(recruitmentPage.isEmailErrorDisplayed(), "Email error message not displayed!");
     }
 
     // Test case: Verify adding a candidate with invalid email format
@@ -111,8 +110,7 @@ public class RecruitmentTests {
         recruitmentPage.clickSave();
 
         // Assert that consent error message is displayed
-        // Assert.assertTrue(recruitmentPage.isConsentErrorDisplayed(), "Consent error
-        // message not displayed!");
+        Assert.assertTrue(recruitmentPage.isFirstNameErrorDisplayed(), "Consent error message not displayed!");
     }
 
     // Test case: Verify resetting the form (Cancel functionality)
