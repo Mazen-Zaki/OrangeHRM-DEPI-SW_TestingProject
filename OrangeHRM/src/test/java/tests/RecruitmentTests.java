@@ -36,12 +36,10 @@ public class RecruitmentTests {
         recruitmentPage.enterEmail("Depi@test.com");
         recruitmentPage.enterContactNumber("1234567890");
         recruitmentPage.uploadResume(
-                "C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\Software Testing Project Guidelines - DEPI 1.pdf"); // Updated//
-                                                                                                                                                // resume//
-                                                                                                                                                // upload
+                "C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\Software Testing Project Guidelines - DEPI 1.pdf");
         recruitmentPage.selectVacancy(); // Select vacancy from dropdown
         recruitmentPage.enterKeywords("Depi Selenium, Testing");
-        recruitmentPage.enterDateOfApplication("2024-15-10"); // Updated date format
+        recruitmentPage.enterDateOfApplication("2024-15-10");
         recruitmentPage.enterNotes("Testing candidate addition");
         recruitmentPage.checkConsent();
         recruitmentPage.clickSave();
@@ -112,6 +110,69 @@ public class RecruitmentTests {
         String expectedUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/recruitment/viewCandidates";
         // Assert that the current URL matches the expected URL
         Assert.assertEquals(actualUrl, expectedUrl, "User is not redirected to the expected page!");
+    }
+
+    // Test case: Verify adding a new candidate with Wrong DOA
+    @Test(priority = 2, description = "Verify adding a new candidate with Wrong DOA")
+    public void verifyAddCandidateWithWrongDoa() {
+        // Navigate to Add Candidate page
+        recruitmentPage.navigateToAddCandidatePage();
+        // Leave some required fields empty
+        recruitmentPage.enterFirstName("Depi");
+        recruitmentPage.enterLastName("Depi");
+        recruitmentPage.enterEmail("Depi@test.com");
+        recruitmentPage.enterDateOfApplication("2025-15-10");
+        recruitmentPage.clickSave();
+        // Assert that error messages for required fields are displayed
+        Assert.assertTrue(recruitmentPage.WrongDoaErrorDisplayed(), "Wrong DOA Displayed!");
+
+    }
+
+    @Test(priority = 2, description = "Verify adding a new candidate with Wrong DOA")
+    public void verifyAddCandidateWithWrongDoaFormat() {
+        // Navigate to Add Candidate page
+        recruitmentPage.navigateToAddCandidatePage();
+        // Leave some required fields empty
+        recruitmentPage.enterFirstName("Depi");
+        recruitmentPage.enterLastName("Depi");
+        recruitmentPage.enterEmail("Depi@test.com");
+        recruitmentPage.enterDateOfApplication("202515/10");
+        recruitmentPage.clickSave();
+        // Assert that error messages for required fields are displayed
+        Assert.assertTrue(recruitmentPage.WrongDoaFormatDisplayed(), "Wrong DOA Format Displayed!");
+
+    }
+
+    // Test case: Verify adding a new candidate with Exceeded File Size
+    @Test(priority = 1, description = "Verify adding a new candidate Exceeded File Size")
+    public void CandidateWithWrongFileSize() {
+        // Navigate to Add Candidate page
+        recruitmentPage.navigateToAddCandidatePage();
+        // Fill in the candidate form with valid data
+        recruitmentPage.enterFirstName("Depi");
+        recruitmentPage.enterLastName("Depi");
+        recruitmentPage.enterEmail("Depi@test.com");
+        recruitmentPage.enterContactNumber("1234567890");
+        recruitmentPage
+                .uploadResume("C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\1.5MB.pdf");
+        // Assert success message is displayed
+        Assert.assertTrue(recruitmentPage.AttachmentSizeExceeded(), "Attachment Size Exceeded");
+    }
+
+    // Test case: Verify adding a new candidate with Wrong File Type
+    @Test(priority = 1, description = "Verify adding a new candidate with Wrong File Type")
+    public void CandidateWithWrongFileType() {
+        // Navigate to Add Candidate page
+        recruitmentPage.navigateToAddCandidatePage();
+        // Fill in the candidate form with valid data
+        recruitmentPage.enterFirstName("Depi");
+        recruitmentPage.enterLastName("Depi");
+        recruitmentPage.enterEmail("Depi@test.com");
+        recruitmentPage.enterContactNumber("1234567890");
+        recruitmentPage
+                .uploadResume("C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\images.png");
+        // Assert success message is displayed
+        Assert.assertTrue(recruitmentPage.WrongFileType(), "Wrong File Type");
     }
 
     // After each test, quit the browser

@@ -126,12 +126,6 @@ public class RecruitmentPage {
 
     }
 
-    // Method to enter date of birth
-    public void enterDateOfBirth(String dob) {
-        dateOfBirth.clear();
-        dateOfBirth.sendKeys(dob); // Ensure format is "yyyy-mm-dd"
-    }
-
     // Method to click the Save button
     public void clickSave() {
         driver.findElement(By
@@ -184,11 +178,31 @@ public class RecruitmentPage {
                 .size() > 0;
     }
 
-    // Method to check if form is reset
-    // public boolean isFormReset() {
-    // return
-    // driver.findElement(By.name("firstName")).getAttribute("value").isEmpty() &&
-    // driver.findElement(By.xpath("//button[@class=\"oxd-button oxd-button--medium
-    // oxd-button--ghost\"]]")).getAttribute("value").isEmpty();
-    // }
+    public boolean WrongDoaErrorDisplayed() {
+        return driver
+                .findElements(By.xpath(
+                        "//span[@class=\"oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message\"]"))
+                .size() > 0;
+    }
+
+    public boolean WrongDoaFormatDisplayed() {
+        return driver
+                .findElements(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[5]/div/div[2]/div/span"))
+                .size() > 0;
+    }
+
+    public boolean AttachmentSizeExceeded() {
+        return driver
+                .findElements(
+                        By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[4]/div/div/div/div/span"))
+                .size() > 0;
+    }
+
+    public boolean WrongFileType() {
+        return driver
+                .findElements(
+                        By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[4]/div/div/div/div/span"))
+                .size() > 0;
+    }
+
 }
