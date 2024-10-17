@@ -37,7 +37,7 @@ public class RecruitmentPage {
         middleNameField.sendKeys(middleName);
     }
 
-    // Method to enter the last name
+    //// Method to enter the last name
     public void enterLastName(String lastName) {
         WebElement lastNameField = driver.findElement(By.name("lastName"));
         lastNameField.clear();
