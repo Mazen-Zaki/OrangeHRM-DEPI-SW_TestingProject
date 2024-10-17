@@ -130,8 +130,7 @@ public class TimeTests {
         }
         timePage.addName(newAddedName);
         timePage.clickSaveButton();
-        if(isExist){//https://opensource-demo.orangehrmlive.com/web/index.php/time/viewCustomers
-//            Assert.assertEquals(timePage.getCurrentURL(),"//https://opensource-demo.orangehrmlive.com/web/index.php/time/viewCustomers");
+        if(isExist){
             Assert.assertEquals(driver.findElement(alreadyExistMessage).isDisplayed(),true);
         }
         else Assert.assertTrue(false);
