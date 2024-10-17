@@ -14,11 +14,11 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Directory {
+public class DirectoryPage {
 
     WebDriver directoryDriver;
     WebDriverWait wait;
-    public Directory(WebDriver driver) {
+    public DirectoryPage(WebDriver driver) {
         this.directoryDriver = driver;
         this.wait = new WebDriverWait(directoryDriver, Duration.ofSeconds(10));  // Initialize wait with 10 seconds
     }

@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
-import pages.Directory;
+import pages.DirectoryPage;
 import pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -20,7 +20,7 @@ public class DirectoryTests {
     String Username = "Admin";
     String Password = "admin123";
     String baseUrl = "https://opensource-demo.orangehrmlive.com/";
-    Directory directory;
+    DirectoryPage directory;
     LoginPage loginPage;
     WebDriverWait wait;
     String SearchedByEmployeeName="User1";
@@ -34,7 +34,7 @@ public class DirectoryTests {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
         loginPage = new LoginPage(driver);
         try {
-            directory = new Directory(driver);
+            directory = new DirectoryPage(driver);
         } catch (Exception e) {
             System.out.println("Failed to initialize Directory: " + e.getMessage());
         }
