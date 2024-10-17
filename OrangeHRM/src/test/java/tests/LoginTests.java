@@ -1,9 +1,8 @@
 package tests;
 
+import base.BaseTest;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,10 +14,11 @@ import pages.LoginPage;
 
 import java.time.Duration;
 
-public class LoginTests
+public class LoginTests extends BaseTest
 {
     WebDriver driver;
     LoginPage loginPage;
+    BaseTest baseTest;
 
     // Locators
     By invalidCredentialAlert = By.xpath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text']");
@@ -34,22 +34,22 @@ public class LoginTests
         // Initialize ChromeDriver (Selenium 4 manages drivers automatically)
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("https://opensource-demo.orangehrmlive.com/");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver.get(baseUrl);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
 
         // Initialize the LoginPage object
         loginPage = new LoginPage(driver);
+        baseTest = new BaseTest(driver);
     }
 
     // Test case: Verify valid login for Admin role
     @Test(priority = 1, description = "Verify valid login for Admin role")
     public void verifyValidLoginAdminRole()
     {
-        loginPage.enterUsername("Admin");
-        loginPage.enterPassword("admin123");
-        loginPage.clickLoginButton();
-
+        // Login with valid credentials
+        baseTest.login(AdminAccount, AdminPassword);
+        
         // Check if the user is redirected to the dashboard
         Assert.assertTrue(driver.getCurrentUrl().contains("dashboard"), "Admin dashboard is not displayed.");
     }
@@ -58,12 +58,11 @@ public class LoginTests
     @Test(priority = 2, description = "Verify invalid login with incorrect password")
     public void verifyInvalidLoginIncorrectPassword()
     {
-        loginPage.enterUsername("Admin");
-        loginPage.enterPassword("wrongpassword");
-        loginPage.clickLoginButton();
+        // Login with invalid credentials
+        baseTest.login(AdminAccount, "admin1234");
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOfElementLocated(invalidCredentialAlert));
 
         // Check if the user remains on the login page (URL should not change to dashboard)
@@ -74,13 +73,11 @@ public class LoginTests
     @Test(priority = 3, description = "Verify empty username and password at login page")
     public void verifyEmptyUsernameAndPassword()
     {
-        // Leave username and password empty
-        loginPage.enterUsername("");
-        loginPage.enterPassword("");
-        loginPage.clickLoginButton();
+        // Leave the username and password fields empty
+        baseTest.login("", "");
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOfElementLocated(requiredAlert));
 
         // Check if the user remains on the login page (URL should not change to dashboard)
@@ -92,12 +89,10 @@ public class LoginTests
     public void verifyEmptyUsername()
     {
         // Leave the username field empty
-        loginPage.enterUsername("");
-        loginPage.enterPassword("admin123");
-        loginPage.clickLoginButton();
+        baseTest.login("", AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 3 seconds)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOfElementLocated(requiredAlert));
 
         // Check if the user remains on the login page (URL should not change to dashboard)
@@ -109,12 +104,10 @@ public class LoginTests
     public void verifyEmptyPassword()
     {
         // Leave the username field empty
-        loginPage.enterUsername("Admin");
-        loginPage.enterPassword("");
-        loginPage.clickLoginButton();
+        baseTest.login(AdminAccount, "");
 
         // Wait for the error message to be visible (with a timeout of 3 seconds)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOfElementLocated(requiredAlert));
 
         // Check if the user remains on the login page (URL should not change to dashboard)
@@ -182,10 +175,8 @@ public class LoginTests
     @Test(priority = 10, description = "Username Case Sensitivity at Login Page")
     public void caseSensitivityUsername()
     {
-        // Leave the username field empty
-        loginPage.enterUsername("admin");
-        loginPage.enterPassword("admin123");
-        loginPage.clickLoginButton();
+        // Login with invalid credentials
+        baseTest.login("admin", AdminPassword);
 
         // Check if the user remains on the login page (URL should not change to dashboard)
         Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
@@ -197,7 +188,7 @@ public class LoginTests
     {
         loginPage.clickForgotPasswordButton();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
         wait.until(ExpectedConditions.visibilityOfElementLocated(resetPasswordButton));
 
         loginPage.enterUsername("NonExistentUser");
@@ -225,15 +216,47 @@ public class LoginTests
     {
         loginPage.clickForgotPasswordButton();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
         wait.until(ExpectedConditions.visibilityOfElementLocated(resetPasswordButton));
 
         loginPage.clickCancelButton();
 
-        Assert.assertTrue(driver.getCurrentUrl().contains("login"), "Cancel Button works very good, bro");
+        Assert.assertTrue(driver.getCurrentUrl().contains("login"), "Cancel Button is not working as expected.");
 
 
     }
+
+    // Test case: SQL Injection Attempt at Login Page
+    @Test(priority = 13, description = "SQL Injection Attempt at Login Page")
+    public void sqlInjection()
+    {
+        // Login with invalid credentials
+        baseTest.login("admin' OR '1'='1", AdminPassword);
+
+        Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
+    }
+
+    // Test case: Verity Valid Login - ESS Role at Login Page
+    @Test(priority = 14, description = "Verity Valid Login - ESS Role at Login Page")
+    public void verifyValidLoginEssRole()
+    {
+        // Login with valid credentials
+        baseTest.login(EssUsernameEnabled, EssPasswordEnabled);
+
+        // Check if the user is redirected to the dashboard
+        Assert.assertTrue(driver.getCurrentUrl().contains("dashboard"), "ESS dashboard is not displayed.");
+    }
+
+    // Test case: Verity Invalid Login - Disabled Status at Login Page
+    @Test(priority = 15, description = "Verity Invalid Login - Disabled Status at Login Page")
+    public void verifyInvalidLoginDisabledStatus()
+    {
+        // Login with invalid credentials
+        baseTest.login(UsernameDisabled, PasswordDisabled);
+
+        Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
+    }
+
 
     // After each test, quit the browser
     @AfterMethod
