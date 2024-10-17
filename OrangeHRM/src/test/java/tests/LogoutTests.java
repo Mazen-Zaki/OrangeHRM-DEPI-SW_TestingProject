@@ -79,12 +79,10 @@ public class LogoutTests extends BaseTest
         Assert.assertTrue(driver.getCurrentUrl().contains("login"));
     }
 
-    // After each test, quit the browser
     @AfterMethod
     public void tearDown()
     {
-        if (driver != null) {
-            driver.quit();
-        }
+        driver.quit();
     }
+
 }

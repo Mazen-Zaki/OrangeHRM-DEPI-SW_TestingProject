@@ -1,15 +1,8 @@
 package base;
 
-import io.qameta.allure.Allure;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
 import pages.LoginPage;
-import utils.ScreenshotUtils;
-
-import java.io.ByteArrayInputStream;
 
 
 public class BaseTest
@@ -38,7 +31,6 @@ public class BaseTest
 
 
     // Locators
-    By userDropDownButton = By.xpath("//img[@class='oxd-userdropdown-img']");
 
     public BaseTest()
     {

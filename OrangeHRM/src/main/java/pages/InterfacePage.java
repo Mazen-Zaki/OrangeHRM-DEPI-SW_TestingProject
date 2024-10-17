@@ -86,20 +86,28 @@ public class InterfacePage
 
     public boolean searchAndVerify(String searchKeyword)
     {
-        WebElement searchElement = driver.findElement(searchField);
-        WebElement searchSideBarElement;
-        String resSearch;
+        try
+        {
+            WebElement searchElement = driver.findElement(searchField);
+            WebElement searchSideBarElement;
+            String resSearch;
 
-        searchElement.sendKeys(Keys.CONTROL + "a");
-        searchElement.sendKeys(Keys.DELETE);
+            searchElement.sendKeys(Keys.CONTROL + "a");
+            searchElement.sendKeys(Keys.DELETE);
 
-        searchElement.sendKeys(searchKeyword);
+            searchElement.sendKeys(searchKeyword);
 
 
-        searchSideBarElement = driver.findElement(searchSideBarField);
-        resSearch =  searchSideBarElement.getText();
+            searchSideBarElement = driver.findElement(searchSideBarField);
+            resSearch =  searchSideBarElement.getText();
 
-        return resSearch.contains(searchKeyword);
+            return resSearch.contains(searchKeyword);
+
+        }
+        catch (NoSuchElementException e)
+        {
+            return false;
+        }
 
     }
 

@@ -2,5 +2,5 @@ package pages;
 
 public class PIMPage
 {
-    system.out.print("any thing");
+    //system.out.print("any thing");
 }

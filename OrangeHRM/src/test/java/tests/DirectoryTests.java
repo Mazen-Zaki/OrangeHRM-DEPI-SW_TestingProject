@@ -34,7 +34,7 @@ public class DirectoryTests {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
         loginPage = new LoginPage(driver);
         try {
-            directory = new Directory(driver);
+            directory = new DirectoryPage(driver);
         } catch (Exception e) {
             System.out.println("Failed to initialize Directory: " + e.getMessage());
         }
