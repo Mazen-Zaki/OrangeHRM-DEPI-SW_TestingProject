@@ -1,7 +1,9 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,9 +20,17 @@ public class LoginTests
     WebDriver driver;
     LoginPage loginPage;
 
+    // Locators
+    By invalidCredentialAlert = By.xpath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text']");
+    By requiredAlert = By.xpath("//span[@class=\"oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message\"]");
+    By resetPasswordSuccessfullyMessage = By.xpath("//h6[@class='oxd-text oxd-text--h6 orangehrm-forgot-password-title']");
+    By resetPasswordButton = By.xpath("//button[@type=\"submit\"]");
+
+
     // Setup method to initialize WebDriver and open the login page
     @BeforeMethod
-    public void setUp() {
+    public void setUp()
+    {
         // Initialize ChromeDriver (Selenium 4 manages drivers automatically)
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -34,7 +44,8 @@ public class LoginTests
 
     // Test case: Verify valid login for Admin role
     @Test(priority = 1, description = "Verify valid login for Admin role")
-    public void verifyValidLoginAdminRole() {
+    public void verifyValidLoginAdminRole()
+    {
         loginPage.enterUsername("Admin");
         loginPage.enterPassword("admin123");
         loginPage.clickLoginButton();
@@ -45,14 +56,15 @@ public class LoginTests
 
     // Test case: Verify invalid login with incorrect password
     @Test(priority = 2, description = "Verify invalid login with incorrect password")
-    public void verifyInvalidLoginIncorrectPassword() {
+    public void verifyInvalidLoginIncorrectPassword()
+    {
         loginPage.enterUsername("Admin");
         loginPage.enterPassword("wrongpassword");
         loginPage.clickLoginButton();
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(invalidCredentialAlert));
 
         // Check if the user remains on the login page (URL should not change to dashboard)
         Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
@@ -60,7 +72,8 @@ public class LoginTests
 
     // Test case: Verify empty username and password at login page
     @Test(priority = 3, description = "Verify empty username and password at login page")
-    public void verifyEmptyUsernameAndPassword() {
+    public void verifyEmptyUsernameAndPassword()
+    {
         // Leave username and password empty
         loginPage.enterUsername("");
         loginPage.enterPassword("");
@@ -68,7 +81,7 @@ public class LoginTests
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class=\"oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message\"]")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(requiredAlert));
 
         // Check if the user remains on the login page (URL should not change to dashboard)
         Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
@@ -76,7 +89,8 @@ public class LoginTests
 
     // Test case: Verify empty username at login page
     @Test(priority = 4, description = "Verify empty username at login page")
-    public void verifyEmptyUsername() {
+    public void verifyEmptyUsername()
+    {
         // Leave the username field empty
         loginPage.enterUsername("");
         loginPage.enterPassword("admin123");
@@ -84,7 +98,7 @@ public class LoginTests
 
         // Wait for the error message to be visible (with a timeout of 3 seconds)
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class=\"oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message\"]")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(requiredAlert));
 
         // Check if the user remains on the login page (URL should not change to dashboard)
         Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
@@ -92,7 +106,8 @@ public class LoginTests
 
     // Test case: Verify empty password at login page
     @Test(priority = 5, description = "Verify empty password at login page")
-    public void verifyEmptyPassword() {
+    public void verifyEmptyPassword()
+    {
         // Leave the username field empty
         loginPage.enterUsername("Admin");
         loginPage.enterPassword("");
@@ -100,7 +115,7 @@ public class LoginTests
 
         // Wait for the error message to be visible (with a timeout of 3 seconds)
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class=\"oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message\"]")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(requiredAlert));
 
         // Check if the user remains on the login page (URL should not change to dashboard)
         Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
@@ -108,7 +123,8 @@ public class LoginTests
 
     // Test case: Verify functionality of LinkedIn button
     @Test(priority = 6, description = "Verify functionality of linkedin button")
-    public void verifyLinkedInButtonFunctionality() {
+    public void verifyLinkedInButtonFunctionality()
+    {
         // Store the current window handle
         String originalWindow = driver.getWindowHandle();
 
@@ -144,7 +160,7 @@ public class LoginTests
         loginPage.clickTwitterButton();
 
         String twitterUrl = loginPage.getTwitterPageUrl();
-        Assert.assertTrue(twitterUrl.contains("twitter.com"), "The Twitter page URL is incorrect!");
+        Assert.assertTrue(twitterUrl.contains("x.com"), "The Twitter page URL is incorrect!");
 
         loginPage.switchBackToOriginalWindow(originalWindow);
     }
@@ -162,9 +178,67 @@ public class LoginTests
         loginPage.switchBackToOriginalWindow(originalWindow);
     }
 
+    // Test case: Username Case Sensitivity at Login Page
+    @Test(priority = 10, description = "Username Case Sensitivity at Login Page")
+    public void caseSensitivityUsername()
+    {
+        // Leave the username field empty
+        loginPage.enterUsername("admin");
+        loginPage.enterPassword("admin123");
+        loginPage.clickLoginButton();
+
+        // Check if the user remains on the login page (URL should not change to dashboard)
+        Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
+    }
+
+    // Test case: Forgot Password - Invalid Username at Login Page
+    @Test(priority = 11, description = "Forgot Password - Invalid Username at Login Page")
+    public void forgotPasswordInvalidUsername()
+    {
+        loginPage.clickForgotPasswordButton();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(resetPasswordButton));
+
+        loginPage.enterUsername("NonExistentUser");
+        loginPage.clickResetPasswordButton();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(resetPasswordSuccessfullyMessage));
+
+//        Assert.fail("Reset password successfully message should not be displayed.");
+        boolean res = loginPage.isResetPasswordSuccessfullyMessageShown();
+
+        if (res)
+        {
+            Assert.fail("Reset password successfully message should not be displayed.");
+        }
+        else
+        {
+            Assert.assertTrue(true, "Reset password successfully message is not displayed as expected.");
+        }
+
+    }
+
+    // Test case: Forgot Password - Cancel Button at Login Page
+    @Test(priority = 12, description = "Forgot Password - Cancel Button at Login Page")
+    public void verigyFunctionalityOfCancelBotton()
+    {
+        loginPage.clickForgotPasswordButton();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(resetPasswordButton));
+
+        loginPage.clickCancelButton();
+
+        Assert.assertTrue(driver.getCurrentUrl().contains("login"), "Cancel Button works very good, bro");
+
+
+    }
+
     // After each test, quit the browser
     @AfterMethod
-    public void tearDown() {
+    public void tearDown()
+    {
         if (driver != null) {
             driver.quit();
         }

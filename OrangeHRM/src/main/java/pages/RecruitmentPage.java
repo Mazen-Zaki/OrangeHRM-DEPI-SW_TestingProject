@@ -3,9 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
+import org.openqa.selenium.support.ui.Select;
 
 public class RecruitmentPage {
     private WebDriver driver;
@@ -20,40 +18,22 @@ public class RecruitmentPage {
     private By lastNameLocator = By.name("lastName");
     private By emailLocator = By.xpath("//input[@placeholder='Type here']");
 
-    // Updated Contact Number locator
     private By contactNumberLocator = By.xpath("//input[@placeholder='Type here']");
-    // Updated Resume locator
-    private By resumeLocator = By.xpath("//div[contains(@class, 'oxd-file-div')]//div[contains(text(),'Browse')]");
-
-    // Updated Keywords locator
+    private By resumeLocator = By.xpath("//input[@type='file']"); // Updated to file input for direct upload
     private By keywordsLocator = By.xpath("//input[@placeholder='Enter comma seperated words...']");
-
-    // Updated Date of Application locator
-    private By dateOfApplicationLocator = By.xpath("//input[@placeholder='yyyy-dd-mm']");
-
-    // Updated Notes locator
+    private By dateOfApplicationLocator = By.xpath("//input[@placeholder='yyyy-mm-dd']"); // Updated format
     private By notesLocator = By.xpath("//textarea[@placeholder='Type here']");
-
-    // Updated Consent Checkbox locator
     private By consentCheckboxInputLocator = By.xpath("//input[@name='consent']");
+    private By saveButtonLocator = By.xpath("//button[contains(@class, 'oxd-button--secondary') and normalize-space()='Save']");
+    private By cancelButtonLocator = By.xpath("//button[contains(@class, 'oxd-button--ghost') and normalize-space()='Cancel']");
 
-    // Save button locator
-    private By saveButtonLocator = By
-            .xpath("//button[contains(@class, 'oxd-button--secondary') and normalize-space()='Save']");
+    private By successMessageLocator = By.xpath("//div[@class='success-message']");
+    private By firstNameErrorLocator = By.xpath("//span[contains(text(),'Required')]");
+    private By emailErrorLocator = By.xpath("//span[contains(text(),'Required')]");
+    private By emailFormatErrorLocator = By.xpath("//span[contains(text(),'Expected format: admin@example.com')]");
 
-    // Cancel button locator
-    private By cancelButtonLocator = By
-            .xpath("//button[contains(@class, 'oxd-button--ghost') and normalize-space()='Cancel']");
-
-    private By successMessageLocator = By.xpath("//div[@class='success-message']"); // Update as necessary
-    private By firstNameErrorLocator = By.xpath("//span[contains(text(),'Required')]"); // Update as
-                                                                                        // necessary
-    private By emailErrorLocator = By.xpath("//span[contains(text(),'Required')]"); // Update as necessary
-    private By emailFormatErrorLocator = By.xpath("//span[contains(text(),'Expected format: admin@example.com')]"); // Update
-                                                                                                                    // as
-    // necessary
-    // private By consentErrorLocator = By.xpath("//span[contains(text(),'Consent is
-    // required')]"); // Update as necessary
+    // Vacancy dropdown locator
+    private By vacancyLocator = By.xpath("//select[@name='vacancy']"); // Updated for dropdown
 
     // Constructor
     public RecruitmentPage(WebDriver driver) {
@@ -75,7 +55,6 @@ public class RecruitmentPage {
 
     // Method to navigate to the Add Candidate page
     public void navigateToAddCandidatePage() {
-        // Directly navigate to the Add Candidate page
         driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/recruitment/addCandidate");
     }
 
@@ -114,12 +93,10 @@ public class RecruitmentPage {
         contactNumberField.sendKeys(contactNumber);
     }
 
-    // Method to upload a resume
+    // Method to upload a resume (fixed)
     public void uploadResume(String resumePath) {
-        WebElement resumeUploadButton = driver.findElement(resumeLocator);
-        resumeUploadButton.click();
-        // Logic to handle file upload, if needed
-        // For file uploads, consider using Robot class or AutoIt for better handling
+        WebElement resumeUploadInput = driver.findElement(resumeLocator);
+        resumeUploadInput.sendKeys(resumePath); // Directly upload the file
     }
 
     // Method to enter keywords
@@ -129,11 +106,11 @@ public class RecruitmentPage {
         keywordsField.sendKeys(keywords);
     }
 
-    // Method to enter the date of application
+    // Method to enter the date of application (updated date format)
     public void enterDateOfApplication(String date) {
         WebElement dateField = driver.findElement(dateOfApplicationLocator);
         dateField.clear();
-        dateField.sendKeys(date);
+        dateField.sendKeys(date); // Ensure the format is "yyyy-mm-dd"
     }
 
     // Method to enter notes
@@ -149,6 +126,13 @@ public class RecruitmentPage {
         if (!consentCheckbox.isSelected()) {
             consentCheckbox.click();
         }
+    }
+
+    // Method to select a vacancy from the dropdown (added)
+    public void selectVacancy(String vacancy) {
+        WebElement vacancyDropdown = driver.findElement(vacancyLocator);
+        Select selectVacancy = new Select(vacancyDropdown);
+        selectVacancy.selectByVisibleText(vacancy);  // Or use selectByIndex() if required
     }
 
     // Method to click the Save button
@@ -176,20 +160,14 @@ public class RecruitmentPage {
         return driver.findElements(emailErrorLocator).size() > 0;
     }
 
-    // Method to check if email format error message is displayed
+    //// Method to check if email format error message is displayed
     public boolean isEmailFormatErrorDisplayed() {
         return driver.findElements(emailFormatErrorLocator).size() > 0;
     }
-
-    // Method to check if consent error message is displayed
-    // public boolean isConsentErrorDisplayed() {
-    // return driver.findElements(consentErrorLocator).size() > 0;
-    // }
 
     // Method to check if form is reset
     public boolean isFormReset() {
         return driver.findElement(firstNameLocator).getAttribute("value").isEmpty() &&
                 driver.findElement(emailLocator).getAttribute("value").isEmpty();
-        // Add checks for other fields as necessary
     }
 }
