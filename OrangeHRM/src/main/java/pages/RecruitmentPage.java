@@ -4,21 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class RecruitmentPage {
     private WebDriver driver;
-
-    // Locators
-    @FindBy(id = "addJobVacancy_name")
-    WebElement jobVacancyName;
-
-    @FindBy(id = "addJobVacancy_hiringManager")
-    WebElement hiringManager;
-
-    @FindBy(name = "dateOfBirth")
-    WebElement dateOfBirth; // Added date of birth field
 
     // Constructor
     public RecruitmentPage(WebDriver driver) {
@@ -26,23 +15,12 @@ public class RecruitmentPage {
         PageFactory.initElements(driver, this);
     }
 
-    // Method to login as Admin
-    public void loginAsAdmin(String username, String password) {
-        WebElement usernameField = driver.findElement(By.name("username"));
-        usernameField.clear();
-        usernameField.sendKeys(username);
-        WebElement passwordField = driver.findElement(By.name("password"));
-        passwordField.clear();
-        passwordField.sendKeys(password);
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
+    public void navigateToAddCandidatePage() {
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/recruitment/addCandidate");
     }
 
     public void navigateToAddJobVacancy() {
         driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/recruitment/addJobVacancy");
-    }
-
-    public void navigateToAddCandidatePage() {
-        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/recruitment/addCandidate");
     }
 
     // Method to enter the first name
@@ -210,7 +188,8 @@ public class RecruitmentPage {
 
     public void VacancyName(String VacancyName) {
         WebElement VacancyNameField = driver.findElement(By.xpath(
-                "//input[contains(@class, 'oxd-input') and contains(@class, 'oxd-input--active') and contains(@class, 'oxd-input--error')]"));
+                "//div[contains(@class, 'oxd-input-group')]//input[contains(@class, 'oxd-input--error')]\r\n" + //
+                                        ""));
         VacancyNameField.sendKeys(VacancyName);
 
     }
@@ -225,7 +204,7 @@ public class RecruitmentPage {
 
     }
 
-    public void AddHiringManager(String hiringManager){
+    public void AddHiringManager(String hiringManager) {
         WebElement hiringManagerField = driver.findElement(By.xpath("//input[@placeholder=\"Type for hints...\"]"));
         hiringManagerField.sendKeys(hiringManager);
     }

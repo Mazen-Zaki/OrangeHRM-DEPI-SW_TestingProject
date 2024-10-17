@@ -101,7 +101,7 @@ public class RecruitmentTests extends BaseTest {
         Assert.assertEquals("Depi Depi Depi", recruitmentPage.GetName(), "The username does not match!");
     }
 
-    // Test case: Verify resetting the form (Cancel functionality)
+    // Test case: Verify (Cancel functionality)
     @Test(priority = 5, description = "Verify Cancel button")
     public void verifyFormReset() {
         // Navigate to Add Candidate page
@@ -186,13 +186,15 @@ public class RecruitmentTests extends BaseTest {
         Assert.assertTrue(recruitmentPage.WrongFileType(), "Wrong File Type");
     }
 
-    @Test(priority = 10, description = "Verify adding a new vaccancy")
+    @Test(priority = 10, description = "Verify adding a new vacancy")
     public void AddNewVacancy() {
+        
         recruitmentPage.navigateToAddJobVacancy();
         recruitmentPage.VacancyName("DepiAdmin");
-        recruitmentPage.JobTitle();
+        recruitmentPage.JobTitle(); 
         recruitmentPage.AddHiringManager("Peter Mac Anderson");
         recruitmentPage.clickSave();
+    
     }
 
     // After each test, quit the browser
