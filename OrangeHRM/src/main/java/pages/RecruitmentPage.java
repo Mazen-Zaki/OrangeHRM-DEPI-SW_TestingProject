@@ -37,7 +37,10 @@ public class RecruitmentPage {
         driver.findElement(By.xpath("//button[@type='submit']")).click();
     }
 
-    // Method to navigate to the Add Candidate page
+    public void navigateToAddJobVacancy() {
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/recruitment/addJobVacancy");
+    }
+
     public void navigateToAddCandidatePage() {
         driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/recruitment/addCandidate");
     }
@@ -203,6 +206,28 @@ public class RecruitmentPage {
                 .findElements(
                         By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[4]/div/div/div/div/span"))
                 .size() > 0;
+    }
+
+    public void VacancyName(String VacancyName) {
+        WebElement VacancyNameField = driver.findElement(By.xpath(
+                "//input[contains(@class, 'oxd-input') and contains(@class, 'oxd-input--active') and contains(@class, 'oxd-input--error')]"));
+        VacancyNameField.sendKeys(VacancyName);
+
+    }
+
+    public void JobTitle() {
+        WebElement dropdownbutton = driver
+                .findElement(By.xpath("//i[@class=\"oxd-icon bi-caret-down-fill oxd-select-text--arrow\"]"));
+        dropdownbutton.click();
+        dropdownbutton = driver.findElement(By
+                .xpath("/html/body/div/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div/div/div[2]/div/div[2]/div[2]"));
+        dropdownbutton.click();
+
+    }
+
+    public void AddHiringManager(String hiringManager){
+        WebElement hiringManagerField = driver.findElement(By.xpath("//input[@placeholder=\"Type for hints...\"]"));
+        hiringManagerField.sendKeys(hiringManager);
     }
 
 }

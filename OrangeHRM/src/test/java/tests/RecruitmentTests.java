@@ -186,6 +186,15 @@ public class RecruitmentTests extends BaseTest {
         Assert.assertTrue(recruitmentPage.WrongFileType(), "Wrong File Type");
     }
 
+    @Test(priority = 10, description = "Verify adding a new vaccancy")
+    public void AddNewVacancy() {
+        recruitmentPage.navigateToAddJobVacancy();
+        recruitmentPage.VacancyName("DepiAdmin");
+        recruitmentPage.JobTitle();
+        recruitmentPage.AddHiringManager("Peter Mac Anderson");
+        recruitmentPage.clickSave();
+    }
+
     // After each test, quit the browser
     @AfterMethod
     public void tearDown() {
