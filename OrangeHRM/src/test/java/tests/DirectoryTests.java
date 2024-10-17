@@ -5,6 +5,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.DirectoryPage;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -32,7 +34,7 @@ public class DirectoryTests {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
         loginPage = new LoginPage(driver);
         try {
-            directory = new DirectoryPage(driver);
+            directory = new Directory(driver);
         } catch (Exception e) {
             System.out.println("Failed to initialize Directory: " + e.getMessage());
         }
