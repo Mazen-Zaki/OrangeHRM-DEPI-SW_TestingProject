@@ -1,9 +1,15 @@
 package base;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import pages.LoginPage;
+import utils.ScreenshotUtils;
+
+import java.io.ByteArrayInputStream;
 
 
 public class BaseTest
@@ -28,6 +34,9 @@ public class BaseTest
     public String PasswordDisabled = "";
 
 
+    public String projectPath = System.getProperty("user.dir");
+
+
     // Locators
     By userDropDownButton = By.xpath("//img[@class='oxd-userdropdown-img']");
 
@@ -48,6 +57,22 @@ public class BaseTest
         loginPage.clickLoginButton();
 
     }
+
+//    @AfterMethod
+//    public void tearDown(ITestResult result) {
+//        // Capture screenshot for every test case
+//        ScreenshotUtils.captureScreenshot(driver);
+//
+//        // Add test result to Allure with screenshot
+//        if (result.getStatus() == ITestResult.FAILURE) {
+//            Allure.addAttachment("Failed Test Screenshot", new ByteArrayInputStream(ScreenshotUtils.captureScreenshot(driver)));
+//        } else {
+//            Allure.addAttachment("Passed Test Screenshot", new ByteArrayInputStream(ScreenshotUtils.captureScreenshot(driver)));
+//        }
+//
+//        // Optionally, close the driver here if you don't want it running for multiple tests
+//        driver.quit();
+//    }
 
 
 

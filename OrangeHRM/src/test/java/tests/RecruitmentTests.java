@@ -1,5 +1,6 @@
 package tests;
 
+import base.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -9,9 +10,12 @@ import org.testng.annotations.Test;
 import pages.RecruitmentPage;
 import java.time.Duration;
 
-public class RecruitmentTests {
+public class RecruitmentTests extends BaseTest
+{
     WebDriver driver;
     RecruitmentPage recruitmentPage;
+    BaseTest baseTest;
+
 
     // Setup method to initialize WebDriver
     @BeforeMethod
@@ -20,8 +24,9 @@ public class RecruitmentTests {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         recruitmentPage = new RecruitmentPage(driver);
-        driver.get("https://opensource-demo.orangehrmlive.com/");
-        recruitmentPage.loginAsAdmin("Admin", "admin123");
+        baseTest = new BaseTest(driver);
+        driver.get(baseUrl);
+        baseTest.login(AdminAccount, AdminPassword);
     }
 
     // Test case: Verify adding a new candidate with valid data
@@ -35,8 +40,9 @@ public class RecruitmentTests {
         recruitmentPage.enterLastName("Depi");
         recruitmentPage.enterEmail("Depi@test.com");
         recruitmentPage.enterContactNumber("1234567890");
-        recruitmentPage.uploadResume(
-                "C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\TestData\\Software Testing Project Guidelines - DEPI 1.pdf");
+        // Use dynamic relative path
+        String filePath = projectPath + "/TestData/Software Testing Project Guidelines - DEPI 1.pdf";
+
         recruitmentPage.selectVacancy(); // Select vacancy from dropdown
         recruitmentPage.enterKeywords("Depi Selenium, Testing");
         recruitmentPage.enterDateOfApplication("2024-15-10");
@@ -113,7 +119,7 @@ public class RecruitmentTests {
     }
 
     // Test case: Verify adding a new candidate with Wrong DOA
-    @Test(priority = 2, description = "Verify adding a new candidate with Wrong DOA")
+    @Test(priority = 6, description = "Verify adding a new candidate with Wrong DOA")
     public void verifyAddCandidateWithWrongDoa() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -128,7 +134,7 @@ public class RecruitmentTests {
 
     }
 
-    @Test(priority = 2, description = "Verify adding a new candidate with Wrong DOA")
+    @Test(priority = 7, description = "Verify adding a new candidate with Wrong DOA")
     public void verifyAddCandidateWithWrongDoaFormat() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -144,7 +150,7 @@ public class RecruitmentTests {
     }
 
     // Test case: Verify adding a new candidate with Exceeded File Size
-    @Test(priority = 1, description = "Verify adding a new candidate Exceeded File Size")
+    @Test(priority = 8, description = "Verify adding a new candidate Exceeded File Size")
     public void CandidateWithWrongFileSize() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -153,15 +159,18 @@ public class RecruitmentTests {
         recruitmentPage.enterLastName("Depi");
         recruitmentPage.enterEmail("Depi@test.com");
         recruitmentPage.enterContactNumber("1234567890");
-        recruitmentPage
-                .uploadResume(
-                        "C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\TestDate\\1.5MB.pdf");
+
+        // Use dynamic relative path
+        String filePath = projectPath + "/TestData/1.5MB.pdf";  // Adjust the relative path as needed
+
+        recruitmentPage.uploadResume(filePath);
+
         // Assert success message is displayed
         Assert.assertTrue(recruitmentPage.AttachmentSizeExceeded(), "Attachment Size Exceeded");
     }
 
     // Test case: Verify adding a new candidate with Wrong File Type
-    @Test(priority = 1, description = "Verify adding a new candidate with Wrong File Type")
+    @Test(priority = 9, description = "Verify adding a new candidate with Wrong File Type")
     public void CandidateWithWrongFileType() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -170,8 +179,9 @@ public class RecruitmentTests {
         recruitmentPage.enterLastName("Depi");
         recruitmentPage.enterEmail("Depi@test.com");
         recruitmentPage.enterContactNumber("1234567890");
-        recruitmentPage
-                .uploadResume("C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\images.png");
+        // Use dynamic relative path
+        String filePath = projectPath + "/TestData/images.png";
+
         // Assert success message is displayed
         Assert.assertTrue(recruitmentPage.WrongFileType(), "Wrong File Type");
     }
