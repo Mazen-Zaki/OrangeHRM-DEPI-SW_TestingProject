@@ -36,7 +36,7 @@ public class RecruitmentTests {
         recruitmentPage.enterEmail("Depi@test.com");
         recruitmentPage.enterContactNumber("1234567890");
         recruitmentPage.uploadResume(
-                "C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\Software Testing Project Guidelines - DEPI 1.pdf");
+                "C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\TestData\\Software Testing Project Guidelines - DEPI 1.pdf");
         recruitmentPage.selectVacancy(); // Select vacancy from dropdown
         recruitmentPage.enterKeywords("Depi Selenium, Testing");
         recruitmentPage.enterDateOfApplication("2024-15-10");
@@ -154,7 +154,8 @@ public class RecruitmentTests {
         recruitmentPage.enterEmail("Depi@test.com");
         recruitmentPage.enterContactNumber("1234567890");
         recruitmentPage
-                .uploadResume("C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\1.5MB.pdf");
+                .uploadResume(
+                        "C:\\Users\\PC\\Desktop\\depi\\OrangeHRM-DEPI-SW_TestingProject\\OrangeHRM\\TestDate\\1.5MB.pdf");
         // Assert success message is displayed
         Assert.assertTrue(recruitmentPage.AttachmentSizeExceeded(), "Attachment Size Exceeded");
     }

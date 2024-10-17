@@ -174,7 +174,7 @@ public class RecruitmentPage {
     // Method to check if email format error message is displayed
     public boolean isEmailFormatErrorDisplayed() {
         return driver
-                .findElements(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[3]/div/div[1]/div/span"))
+                .findElements(By.xpath("//span[contains(normalize-space(.), 'Expected format: admin@example.com')]"))
                 .size() > 0;
     }
 
