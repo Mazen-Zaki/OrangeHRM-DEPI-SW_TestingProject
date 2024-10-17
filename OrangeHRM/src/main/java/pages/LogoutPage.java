@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 public class LogoutPage
 {
     WebDriver driver;
-    LoginPage loginPage;
 
     // Locators
     By userDropDownButton = By.xpath("//img[@class='oxd-userdropdown-img']");
@@ -16,16 +15,7 @@ public class LogoutPage
     // Constructor
     public LogoutPage(WebDriver driver)
     {
-        loginPage = new LoginPage(driver);
         this.driver = driver;
-    }
-
-    // Method to Login
-    public void login(String username, String password)
-    {
-        loginPage.enterUsername(username);
-        loginPage.enterPassword(password);
-        loginPage.clickLoginButton();
     }
 
     public void clickUserDropDownButton()
