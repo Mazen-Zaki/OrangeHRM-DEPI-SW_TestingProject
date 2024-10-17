@@ -10,12 +10,10 @@ import org.testng.annotations.Test;
 import pages.RecruitmentPage;
 import java.time.Duration;
 
-public class RecruitmentTests extends BaseTest
-{
+public class RecruitmentTests extends BaseTest {
     WebDriver driver;
     RecruitmentPage recruitmentPage;
     BaseTest baseTest;
-
 
     // Setup method to initialize WebDriver
     @BeforeMethod
@@ -42,6 +40,7 @@ public class RecruitmentTests extends BaseTest
         recruitmentPage.enterContactNumber("1234567890");
         // Use dynamic relative path
         String filePath = projectPath + "/TestData/Software Testing Project Guidelines - DEPI 1.pdf";
+        recruitmentPage.uploadResume(filePath);
 
         recruitmentPage.selectVacancy(); // Select vacancy from dropdown
         recruitmentPage.enterKeywords("Depi Selenium, Testing");
@@ -161,7 +160,7 @@ public class RecruitmentTests extends BaseTest
         recruitmentPage.enterContactNumber("1234567890");
 
         // Use dynamic relative path
-        String filePath = projectPath + "/TestData/1.5MB.pdf";  // Adjust the relative path as needed
+        String filePath = projectPath + "/TestData/1.5MB.pdf"; // Adjust the relative path as needed
 
         recruitmentPage.uploadResume(filePath);
 
@@ -181,6 +180,7 @@ public class RecruitmentTests extends BaseTest
         recruitmentPage.enterContactNumber("1234567890");
         // Use dynamic relative path
         String filePath = projectPath + "/TestData/images.png";
+        recruitmentPage.uploadResume(filePath);
 
         // Assert success message is displayed
         Assert.assertTrue(recruitmentPage.WrongFileType(), "Wrong File Type");
