@@ -50,6 +50,7 @@ public class TimePage {
         wait = new WebDriverWait(timeDriver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(viewBtn));
         timeDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
     }
     public void writeEmployeeName(String empName){
         timeDriver.findElement(employeeName).sendKeys(empName);
@@ -179,7 +180,6 @@ public class TimePage {
     }
     public void clickSaveButton(){
         timeDriver.findElement(saveBtn).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(AddButton));
     }
     public void navigateToCustomerNames(){
         timeDriver.findElement(projectInfo).click();
