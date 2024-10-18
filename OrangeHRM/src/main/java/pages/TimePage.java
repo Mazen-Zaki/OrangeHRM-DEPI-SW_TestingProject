@@ -40,7 +40,7 @@ public class TimePage {
     By recordNames=By.xpath("//div[@class=\"oxd-table-cell oxd-padding-cell\"][2]");
     By recordsFound=By.xpath("(//span[@class=\"oxd-text oxd-text--span\"])[1]");
     public By inTimeRecord=By.xpath("//div[@class=\"oxd-table-cell oxd-padding-cell\"][2]");
-    public By outTimeRecord=By.xpath("//div[@class=\"oxd-table-cell oxd-padding-cell\"][4]");
+    By table=By.cssSelector(".orangehrm-container");
 
 
 
@@ -57,6 +57,8 @@ public class TimePage {
     }
     public WebElement inValidMessage(){
         return timeDriver.findElement(invalidMessage);
+    }public WebElement recordTables(){
+        return timeDriver.findElement(table);
     }
     public WebElement requiredMessage(){
         return timeDriver.findElement(requiredMessage);
@@ -118,14 +120,6 @@ public class TimePage {
     }
     public void setPunchInTime(String time){
         timeDriver.findElement(setTime).sendKeys(time);
-    }
-    public void setPunchOutDate(String date){
-        timeDriver.findElement(setDate).sendKeys(date);
-    }
-    public void setDate(String time){
-        clearDate();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(setDate));
-        timeDriver.findElement(setDate).sendKeys(time);
     }
     public void punchIn(String date, String time) throws InterruptedException {
         navigateToPinchInOut();
@@ -194,9 +188,7 @@ public class TimePage {
         }
         return names.toArray(new String[0]);
     }
-    public String getCurrentURL(){
-        return timeDriver.getCurrentUrl();
-    }
+
 
 
 }

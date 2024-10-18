@@ -4,7 +4,6 @@ import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -124,8 +123,6 @@ public class ClaimTests {
                     counter2++;
             Assert.assertEquals(counter, counter2);
         }
-
-
     }
     @Test(dependsOnMethods = "login")
     public void searchByStatus() {
@@ -219,14 +216,19 @@ public class ClaimTests {
         claimPage.navigateToExpenseType();
         boolean isExist=false;
         String []events;
+        wait.until(ExpectedConditions.visibilityOf(claimPage.recordTable()));
         events=claimPage.getEvents();
-        for(String event:events)
+        for(String event:events){
+            System.out.println("Original events : "+ event);
             if(event.equals(searchedEventExpense)){
                 isExist=true;break;}
+        }
         claimPage.SearchByName(searchedEventExpense);
         claimPage.chooseEvent(searchedStatusExpense);
         claimPage.clickOnSearchBtn();
+        wait.until(ExpectedConditions.visibilityOf(claimPage.recordTable()));
         events=claimPage.getEvents();
+
         for(String event:events)
             if(event.equals(searchedEventExpense))
                 isExist=true;

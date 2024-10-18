@@ -64,18 +64,22 @@ public class TimeTests {
         String[] originalNames;
         originalNames = timePage.getAllNameRecords();
         for (String names : originalNames) {
-            if (names.equals(searchedEmployee))
+            if (names.equals(searchedEmployee)){
                 isExist = true;
-            break;
+                break;}
         }
         timePage.writeEmployeeName(searchedEmployee);
         timePage.clickOnSearchBtn();
-        if (isExist)
-            Assert.assertFalse(timePage.inValidMessage().isDisplayed());
-        else
-            Assert.assertTrue(timePage.inValidMessage().isDisplayed());
-    }
+        wait.until(ExpectedConditions.visibilityOf(timePage.recordTables()));
+        originalNames = timePage.getAllNameRecords();
+        for (String names : originalNames) {
+            if (names.equals(searchedEmployee))
+                Assert.assertTrue(true);
+            else
+                Assert.assertTrue(false);
 
+        }
+    }
     @Test(dependsOnMethods = "login")
     public void SearchByBlankInput() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type=\"submit\"]")));
@@ -92,8 +96,6 @@ public class TimeTests {
         WebElement isDisabled = timePage.punchDate();
         Assert.assertFalse(isDisabled.isEnabled());
     }
-
-
     @Test(dependsOnMethods = "login")
     public void punchIn_Out() throws InterruptedException {
         timePage.punchIn(punchInDate,punchInTime);
