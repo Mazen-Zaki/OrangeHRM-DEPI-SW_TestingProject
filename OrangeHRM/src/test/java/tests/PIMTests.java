@@ -1,14 +1,20 @@
 package tests;
 import base.BaseTest;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pages.ConfigurationPage;
+import pages.PIMPage;
+import pages.ReportsPage;
+
 import java.time.Duration;
 
-public class PIMTest extends BaseTest {
+public class PIMTests extends BaseTest
+{
     WebDriver driver;
     BaseTest basetest;
     PIMPage pimPage;
@@ -16,8 +22,8 @@ public class PIMTest extends BaseTest {
     ReportsPage reportsPage;
 
     @BeforeClass
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe"); // Example path for Windows
+    public void setUp()
+    {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
