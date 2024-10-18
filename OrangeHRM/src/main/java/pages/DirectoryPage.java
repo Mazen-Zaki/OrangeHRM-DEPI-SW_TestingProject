@@ -27,9 +27,6 @@ public class DirectoryPage {
     By invalidMessage = By.xpath("//span[text()='Invalid']");
     By jobTitle = By.xpath("//div[@class='oxd-grid-4']//div[@class='oxd-grid-item oxd-grid-item--gutters']//div[contains(@class,'orangehrm-directory-card')]//p[contains(@class,'orangehrm-directory-card-subtitle')]");
     By jobTitleDropDownSearch = By.cssSelector(".oxd-select-text-input");
-    By locationLocator=By.xpath("(//div[@class=\"oxd-select-text-input\"])[2]");
-    By locationRecord=By.xpath("//div[contains(@class,'orangehrm-directory-card-body')]//p[contains(@class,'orangehrm-directory-card-description')][last()]");
-    By table=By.xpath(".orangehrm-container");
     /**********************************      Actions      **********************************/
     public void navigateToDirectory() {
         directoryDriver.findElement(directoryButton).click();
@@ -38,11 +35,6 @@ public class DirectoryPage {
     public void writeEmployeeName(String employeeName) {
         directoryDriver.findElement(EmployeeName).sendKeys(employeeName);
     }
-
-    public WebElement recordTable(){
-        return directoryDriver.findElement(table);
-    }
-
 
     public void clickOnSearchBtn() {
         directoryDriver.findElement(searchBtn).click();
@@ -62,14 +54,8 @@ public class DirectoryPage {
 
     public void chooseJobTitle(String status) {
         WebElement dropdown = directoryDriver.findElement(jobTitleDropDownSearch); // Adjust the XPath as necessary
-        dropdown.click();//div[@role='option']//span[text()='Accommodation']
-        WebElement dropdownOption = directoryDriver.findElement(By.xpath("//div[@role='option']//span[text()='" + status + "']"));
-        dropdownOption.click();
-    }
-    public void chooseLocation(String location) {
-        WebElement dropdown = directoryDriver.findElement(locationLocator); // Adjust the XPath as necessary
         dropdown.click();
-        WebElement dropdownOption = directoryDriver.findElement(By.xpath("//div[contains(@class,'oxd-select-option')]//span[text()='"+location+"']"));
+        WebElement dropdownOption = directoryDriver.findElement(By.xpath("//div[@role='option']//span[text()='" + status + "']"));
         dropdownOption.click();
     }
 
@@ -112,19 +98,5 @@ public class DirectoryPage {
         }
         // Return the job titles as an array
         return jobTexts.toArray(new String[0]);
-    }
-    public String[] locationRecord(){
-        // Wait for the table elements to be visible
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(recordsTable));
-        List<WebElement> headers = directoryDriver.findElements(locationRecord);
-        List<String> headerTexts = new ArrayList<>();
-        for (WebElement header : headers) {
-            // Extract the text from each element and add it to the list
-            headerTexts.add(header.getText());
-            System.out.println(header.getText());
-        }
-        // Convert the list of header texts to a string array
-        return headerTexts.toArray(new String[0]);
-
     }
 }

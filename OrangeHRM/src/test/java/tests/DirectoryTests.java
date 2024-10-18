@@ -8,7 +8,6 @@ import org.testng.Assert;
 import pages.DirectoryPage;
 import pages.LoginPage;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.*;
 import java.time.Duration;
 
@@ -20,8 +19,6 @@ public class DirectoryTests {
     DirectoryPage directory;
     LoginPage loginPage;
     WebDriverWait wait;
-    String searchedLocation="New York Sales Office";
-
 
     @BeforeClass
     public void Setup() {
