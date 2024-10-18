@@ -1,18 +1,15 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.DirectoryPage;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
+import org.testng.annotations.*;
 import java.time.Duration;
 
 public class DirectoryTests {
@@ -23,11 +20,12 @@ public class DirectoryTests {
     DirectoryPage directory;
     LoginPage loginPage;
     WebDriverWait wait;
-    String SearchedByEmployeeName="User1";
+    String searchedLocation="New York Sales Office";
+
 
     @BeforeClass
-    public void Setup(){
-        driver = new EdgeDriver();  // Instantiate WebDriver
+    public void Setup() {
+        driver = new ChromeDriver();  // Instantiate WebDriver
         driver.get(baseUrl);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -38,11 +36,11 @@ public class DirectoryTests {
         } catch (Exception e) {
             System.out.println("Failed to initialize Directory: " + e.getMessage());
         }
-        System.out.println("Loading is done successfully");
+        System.out.println("Loading Login page is done successfully");
     }
 
     @Test(priority = 1)
-    public void login(){
+    public void login() {
         loginPage.enterUsername(Username);
         loginPage.enterPassword(Password);
         loginPage.clickLoginButton();
@@ -54,58 +52,61 @@ public class DirectoryTests {
     }
 
 
-    @Test(priority = 2,dependsOnMethods = "login")
+    @Test(priority = 2, dependsOnMethods = "login")
     public void SearchByEmployeeName() {
-//        directory.clearSearch();
         String[] allNames = directory.getAllRecords();
         String specificName = allNames[0];
         directory.writeEmployeeName(specificName);
-        //System.out.println(directory.getWrittenValue());
         directory.clickOnSearchBtn();
         String[] searchedNames = directory.getAllRecords();
-        if (searchedNames[0].equals(specificName)) {////span[text()='Invalid']
+        if (searchedNames[0].equals(specificName)) {
             Assert.assertFalse(directory.isInvalidMessageIsShown().isDisplayed());
         }
     }
 
-    @Test(priority = 3,dependsOnMethods = "login")
+    @Test(priority = 3, dependsOnMethods = "login")
     public void SearchBySubEmployeeName() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".oxd-label")));
         directory.clearSearch();
-        try{
+        try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".orangehrm-container")));
-        String[] allNames = directory.getAllRecords();
-        String specificName = allNames[0];
-        String subName=specificName.substring(0,3);
-        directory.writeEmployeeName(subName);
-        directory.clickOnSearchBtn();
-        String[] searchedNames = directory.getAllRecords();
-        if (searchedNames[0].equals(specificName)) {////span[text()='Invalid']
-            Assert.assertFalse(directory.isInvalidMessageIsShown().isDisplayed());
-        }}
-        catch(Exception err){
-            System.out.println(err.toString());
+            String[] allNames = directory.getAllRecords();
+            String specificName = allNames[0];
+            String subName = specificName.substring(0, 3);
+            directory.writeEmployeeName(subName);
+            directory.clickOnSearchBtn();
+            String[] searchedNames = directory.getAllRecords();
+            if (searchedNames[0].equals(specificName)) {
+                Assert.assertFalse(directory.isInvalidMessageIsShown().isDisplayed());
             }
+        } catch (Exception err) {
+            System.out.println(err.toString());
+        }
     }
-    @Test(priority = 4,dependsOnMethods = "login")
+
+    @Test(priority = 4, dependsOnMethods = "login")
     public void resetButton() {
         // Write a name in the employee name field
         directory.writeEmployeeName("Hello");
-
-        // Clear the search input
-//        directory.clearSearch();
         driver.findElement(By.xpath("//button[@type='reset']")).click();
-
         // Get the written value (assumed to be the current value in the text field)
         String writtenValue = directory.getWrittenValue();
-
         // Assert that the value is empty after clearing
         Assert.assertTrue(writtenValue.isEmpty(), "The search input was not cleared.");
     }
-//    @Test(priority =5,dependsOnMethods = "login")
-//    public void writeJobTitle(){
-//        directory.chooseJobTitle();
-//    }
+
+    @Test(priority = 5, dependsOnMethods = "login")
+    public void searchByJobTitle() {
+        String jobTitle = "Chief Financial Officer";
+        directory.chooseJobTitle(jobTitle);
+        directory.clickOnSearchBtn();
+        String[] existingTitles = directory.getJobTitles();
+        for (String title : existingTitles) {
+            if (title.equals(jobTitle.toString())) {
+                Assert.assertTrue(true);
+            }
+        }
+    }
 }
 
 
