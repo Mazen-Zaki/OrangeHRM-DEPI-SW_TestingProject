@@ -1,5 +1,20 @@
 package tests;
 
+<<<<<<< HEAD
+package tests;
+import base.BaseTest;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import pages.MyInfoPage;
+import pages.ContactDetailsPage;
+import pages.PersonalDetailsPage;
+import pages.EmergencyContactsPage;
+=======
 import base.BaseTest2;
 import pages.ContactDetailsPage;
 import pages.EmergencyContactsPage;
@@ -7,8 +22,14 @@ import pages.MyInfoPage;
 import pages.PersonalDetailsPage;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertTrue;
+>>>>>>> 04dd1093898f43f4f8667f5510879fbcdef180b5
 
+<<<<<<< HEAD
+
+public class MyInfoTest extends BaseTest2 {
+=======
 public class MyInfoTests extends BaseTest2 {
+>>>>>>> 04dd1093898f43f4f8667f5510879fbcdef180b5
     private MyInfoPage myInfoPage;
     private ContactDetailsPage contactDetailsPage;
     private PersonalDetailsPage personalDetailsPage;
