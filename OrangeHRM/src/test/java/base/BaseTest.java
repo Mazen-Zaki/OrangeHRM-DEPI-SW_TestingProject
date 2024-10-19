@@ -32,9 +32,7 @@ public class BaseTest
 
     // Locators
 
-    public BaseTest()
-    {
-    }
+    
 
     public BaseTest(WebDriver driver)
     {

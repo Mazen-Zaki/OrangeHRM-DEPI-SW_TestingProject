@@ -1,21 +1,23 @@
-
 package pages;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class ReportsPage {
-    WebDriver driver;
+    private WebDriver driver;
 
-    By reportsTab = By.xpath("//a[@href='/web/index.php/pim/viewDefinedPredefinedReports']");
-    By addReportButton = By.id("btnAdd");
-    By reportName = By.id("report_report_name");
-    By selectionCriteria = By.id("report_criteria_list");
-    By saveButton = By.id("btnSave");
-    By searchReportName = By.id("search_search");
-    By searchButton = By.id("searchBtn");
-    By resetButton = By.id("resetBtn");
-    By deleteButton = By.id("btnDelete");
-    By confirmDeleteButton = By.id("dialogDeleteBtn");
+    private By reportsTab = By.id("menu_pim_viewReport");
+    private By addReportButton = By.id("btnAdd");
+    private By reportNameField = By.id("report_report_name");
+    private By saveReportButton = By.id("btnSave");
+    private By searchReportField = By.id("search_search");
+    private By searchButton = By.id("btnSearch");
+    private By reportNameLink = By.xpath("//a[contains(text(), 'Sample Report')]"); // Replace 'Sample Report' as needed
+    private By editButton = By.id("btnSave");
+    private By deleteButton = By.id("btnDelete");
+    private By confirmDeleteButton = By.id("dialogDeleteBtn");
+    private By successMessage = By.xpath("//div[contains(@class, 'success-message')]");
 
     public ReportsPage(WebDriver driver) {
         this.driver = driver;
@@ -25,24 +27,33 @@ public class ReportsPage {
         driver.findElement(reportsTab).click();
     }
 
-    public void addReport(String name, String criteria) {
+    public void addReport(String reportName) {
         driver.findElement(addReportButton).click();
-        driver.findElement(reportName).sendKeys(name);
-        driver.findElement(selectionCriteria).sendKeys(criteria);
-        driver.findElement(saveButton).click();
+        driver.findElement(reportNameField).sendKeys(reportName);
+        driver.findElement(saveReportButton).click();
     }
 
-    public void searchReport(String name) {
-        driver.findElement(searchReportName).sendKeys(name);
+    public void searchReport(String reportName) {
+        driver.findElement(searchReportField).sendKeys(reportName);
         driver.findElement(searchButton).click();
     }
 
-    public void resetSearch() {
-        driver.findElement(resetButton).click();
+    public void editReport(String newReportName) {
+        driver.findElement(reportNameLink).click();
+        driver.findElement(editButton).click();
+        WebElement reportNameInput = driver.findElement(reportNameField);
+        reportNameInput.clear();
+        reportNameInput.sendKeys(newReportName);
+        driver.findElement(saveReportButton).click();
     }
 
     public void deleteReport() {
+        driver.findElement(reportNameLink).click();
         driver.findElement(deleteButton).click();
         driver.findElement(confirmDeleteButton).click();
+    }
+
+    public boolean isSuccessMessageDisplayed() {
+        return driver.findElements(successMessage).size() > 0;
     }
 }

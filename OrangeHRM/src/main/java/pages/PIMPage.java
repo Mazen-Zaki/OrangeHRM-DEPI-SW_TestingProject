@@ -1,58 +1,41 @@
 package pages;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class PIMPage {
-    WebDriver driver;
+    private WebDriver driver;
 
-    By addEmployeeButton = By.xpath("//a[@href='/web/index.php/pim/addEmployee']");
-    By firstName = By.name("firstName");
-    By lastName = By.name("lastName");
-    By employeeId = By.name("employeeId");
-    By saveButton = By.id("btnSave");
-    By searchEmployeeName = By.xpath("//input[@name='empsearch[employee_name][empName]']");
-    By searchButton = By.id("searchBtn");
-    By resetButton = By.id("resetBtn");
-    By deleteButton = By.id("btnDelete");
-    By confirmDeleteButton = By.id("dialogDeleteBtn");
-    By editButton = By.id("btnSave");
+    // Locators
+    private By pimTab = By.xpath("//span[text()='PIM']");
+    private By addEmployeeButton = By.xpath("//button[text()='Add Employee']");
+    private By firstNameField = By.name("firstName");
+    private By lastNameField = By.name("lastName");
+    private By employeeIdField = By.name("employeeId");
+    private By saveButton = By.xpath("//button[text()='Save']");
+    private By errorMessage = By.xpath("//span[contains(text(),'Already exists')]");
 
     public PIMPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void navigateToAddEmployee() {
+    public void navigateToPIM() {
+        driver.findElement(pimTab).click();
+    }
+
+    public void clickAddEmployee() {
         driver.findElement(addEmployeeButton).click();
     }
 
-    public void addEmployee(String fName, String lName, String empId) {
-        driver.findElement(firstName).sendKeys(fName);
-        driver.findElement(lastName).sendKeys(lName);
-        driver.findElement(employeeId).clear();
-        driver.findElement(employeeId).sendKeys(empId);
+    public void addEmployee(String firstName, String lastName, String employeeId) {
+        driver.findElement(firstNameField).sendKeys(firstName);
+        driver.findElement(lastNameField).sendKeys(lastName);
+        driver.findElement(employeeIdField).clear();
+        driver.findElement(employeeIdField).sendKeys(employeeId);
         driver.findElement(saveButton).click();
     }
 
-    public void searchEmployee(String empName) {
-        driver.findElement(searchEmployeeName).sendKeys(empName);
-        driver.findElement(searchButton).click();
-    }
-
-    public void resetSearch() {
-        driver.findElement(resetButton).click();
-    }
-
-    public void deleteEmployee() {
-        driver.findElement(deleteButton).click();
-        driver.findElement(confirmDeleteButton).click();
-    }
-
-    public void editEmployee(String newFName, String newLName) {
-        driver.findElement(editButton).click();
-        driver.findElement(firstName).clear();
-        driver.findElement(firstName).sendKeys(newFName);
-        driver.findElement(lastName).clear();
-        driver.findElement(lastName).sendKeys(newLName);
-        driver.findElement(saveButton).click();
+    public boolean isErrorMessageDisplayed() {
+        return driver.findElements(errorMessage).size() > 0;
     }
 }
