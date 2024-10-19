@@ -175,6 +175,10 @@ public class InterfacePage
     }
 
 
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
 
     // Method to switch back to the original window
     public void switchBackToOriginalWindow(String originalWindow) {
