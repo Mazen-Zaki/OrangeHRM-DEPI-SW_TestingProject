@@ -1,9 +1,14 @@
 package tests;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import base.BaseTest2;
+import pages.ContactDetailsPage;
+import pages.EmergencyContactsPage;
+import pages.MyInfoPage;
+import pages.PersonalDetailsPage;
+import org.testng.annotations.Test;
+import static org.testng.Assert.assertTrue;
 
-public class MyInfoTest extends BaseTest2 {
+public class MyInfoTests extends BaseTest2 {
     private MyInfoPage myInfoPage;
     private ContactDetailsPage contactDetailsPage;
     private PersonalDetailsPage personalDetailsPage;
