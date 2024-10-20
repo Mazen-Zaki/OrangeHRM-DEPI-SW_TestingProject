@@ -49,10 +49,6 @@ public class LogoutTests extends BaseTest
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton));
-
         logoutPage.clickUserDropDownButton();
         logoutPage.clickLogoutButtonButton();
 
@@ -68,10 +64,6 @@ public class LogoutTests extends BaseTest
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton));
 
         logoutPage.clickUserDropDownButton();
         logoutPage.clickLogoutButtonButton();

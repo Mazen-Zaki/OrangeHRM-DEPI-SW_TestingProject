@@ -1,7 +1,10 @@
 package pages;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.Set;
 
 public class InterfacePage
@@ -14,7 +17,7 @@ public class InterfacePage
 
     By upgradeButton = By.xpath("//a[@class=\"orangehrm-upgrade-link\"]");
     By sideBarButton = By.xpath("//button[@class=\"oxd-icon-button oxd-main-menu-button\"]");
-    By searchField = By.xpath("//div[@class=\"oxd-main-menu --fixed\"]//div[@class=\"oxd-main-menu-search\"]//input[@class=\"oxd-input oxd-input--active\"]");
+    By searchField = By.xpath("//input[contains(@class, 'input')]");
 
     By AboutButton = By.xpath("//ul[@class=\"oxd-dropdown-menu\"]//li[1]");
     By SupportButton = By.xpath("//ul[@class=\"oxd-dropdown-menu\"]//li[2]");
@@ -33,6 +36,25 @@ public class InterfacePage
 
     By supportHeader = By.xpath("//h6[@class=\"oxd-text oxd-text--h6 orangehrm-main-title\"]");
 
+    // Elements
+    WebElement userDropDownButtonElement;
+    WebElement upgradeButtonElement;
+
+    WebElement sideBarButtonElement;
+    WebElement searchFieldElement;
+    WebElement searchSideBarElement;
+    WebElement aboutButtonElement;
+    WebElement supportButtonElement;
+    WebElement changePasswordButtonElement;
+    WebElement logoutButtonElement;
+    WebElement currentPasswordFieldElement;
+    WebElement newPasswordFieldElement;
+    WebElement confirmPasswordFieldElement;
+    WebElement saveButtonElement;
+    WebElement aboutHeaderElement;
+    WebElement closeAboutButtonElement;
+
+
     // Constructor
     public InterfacePage(WebDriver driver)
     {
@@ -42,28 +64,23 @@ public class InterfacePage
 
     public void clickUserDropDownButton()
     {
-        WebElement userDropDownButtonElement = driver.findElement(userDropDownButton);
+        userDropDownButtonElement = driver.findElement(userDropDownButton);
         userDropDownButtonElement.click();
     }
 
     public void clickUpgradeButton()
     {
-        String originalWindow = driver.getWindowHandle();
-        WebElement upgradeButtonElement = driver.findElement(upgradeButton);
+        upgradeButtonElement = driver.findElement(upgradeButton);
         upgradeButtonElement.click();
 
-        Set<String> windowHandles = driver.getWindowHandles();
-        windowHandles.remove(originalWindow);
-
-        String newTabHandle = windowHandles.iterator().next();
-        driver.switchTo().window(newTabHandle);
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
     }
 
     public String getCurrentPageUrl() {return driver.getCurrentUrl();}
 
     public void clickSideBarButton()
     {
-        WebElement sideBarButtonElement = driver.findElement(sideBarButton);
+        sideBarButtonElement = driver.findElement(sideBarButton);
         sideBarButtonElement.click();
     }
 
@@ -71,10 +88,10 @@ public class InterfacePage
     {
         try
         {
-            WebElement aboutButton = driver.findElement(AboutButton);
-            WebElement supportButton = driver.findElement(SupportButton);
-            WebElement changePasswordButton = driver.findElement(ChangePasswordButton);
-            WebElement logoutButton = driver.findElement(LogoutButton);
+            aboutButtonElement = driver.findElement(AboutButton);
+            supportButtonElement = driver.findElement(SupportButton);
+            changePasswordButtonElement = driver.findElement(ChangePasswordButton);
+            logoutButtonElement = driver.findElement(LogoutButton);
         }
         catch (NoSuchElementException e)
         {
@@ -88,32 +105,26 @@ public class InterfacePage
     {
         try
         {
-            WebElement searchElement = driver.findElement(searchField);
-            WebElement searchSideBarElement;
-            String resSearch;
+            searchFieldElement = driver.findElement(searchField);
 
-            searchElement.sendKeys(Keys.CONTROL + "a");
-            searchElement.sendKeys(Keys.DELETE);
+            searchFieldElement.sendKeys(Keys.CONTROL + "a", Keys.DELETE);
 
-            searchElement.sendKeys(searchKeyword);
-
+            searchFieldElement.sendKeys(searchKeyword);
 
             searchSideBarElement = driver.findElement(searchSideBarField);
-            resSearch =  searchSideBarElement.getText();
+            String resSearch = searchSideBarElement.getText();
 
             return resSearch.contains(searchKeyword);
-
         }
         catch (NoSuchElementException e)
         {
             return false;
         }
-
     }
 
     public void clickAboutButton()
     {
-        WebElement aboutButtonElement = driver.findElement(AboutButton);
+        aboutButtonElement = driver.findElement(AboutButton);
         aboutButtonElement.click();
     }
 
@@ -121,7 +132,7 @@ public class InterfacePage
     {
         try
         {
-            WebElement aboutHeaderElement = driver.findElement(aboutHeader);
+            aboutHeaderElement = driver.findElement(aboutHeader);
         }
         catch (NoSuchElementException e)
         {
@@ -133,13 +144,13 @@ public class InterfacePage
 
     public void clickCloseAboutButton()
     {
-        WebElement closeAboutButtonElement = driver.findElement(closeAboutButton);
+        closeAboutButtonElement = driver.findElement(closeAboutButton);
         closeAboutButtonElement.click();
     }
 
     public void clickSupportButton()
     {
-        WebElement supportButtonElement = driver.findElement(SupportButton);
+        supportButtonElement = driver.findElement(SupportButton);
         supportButtonElement.click();
     }
 
@@ -147,7 +158,7 @@ public class InterfacePage
     {
         try
         {
-            WebElement aboutHeaderElement = driver.findElement(supportHeader);
+            aboutHeaderElement = driver.findElement(supportHeader);
         }
         catch (NoSuchElementException e)
         {
@@ -159,15 +170,15 @@ public class InterfacePage
 
     public void clickChangePasswordButton()
     {
-        WebElement changePasswordButtonElement = driver.findElement(ChangePasswordButton);
+        changePasswordButtonElement = driver.findElement(ChangePasswordButton);
         changePasswordButtonElement.click();
     }
 
     public void setNewPassword(String currentPassword, String newPassword, String confirmPassword)
     {
-        WebElement currentPasswordFieldElement = driver.findElement(currentPasswordField);
-        WebElement newPasswordFieldElement = driver.findElement(newPasswordField);
-        WebElement confirmPasswordFieldElement = driver.findElement(confirmPasswordField);
+        currentPasswordFieldElement = driver.findElement(currentPasswordField);
+        newPasswordFieldElement = driver.findElement(newPasswordField);
+        confirmPasswordFieldElement = driver.findElement(confirmPasswordField);
 
         currentPasswordFieldElement.sendKeys(currentPassword);
         newPasswordFieldElement.sendKeys(newPassword);

@@ -4,9 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-
-import java.util.Set;
 
 public class LoginPage
 {
@@ -29,6 +26,17 @@ public class LoginPage
     By resetPasswordSuccessfullyMessage = By.xpath("//h6[@class='oxd-text oxd-text--h6 orangehrm-forgot-password-title']");
 
     // Element
+    WebElement usernameElement;
+    WebElement passwordElement;
+    WebElement loginButtonElement;
+    WebElement linkedInButtonElement;
+    WebElement facebookButtonElement;
+    WebElement twitterButtonElement;
+    WebElement youtubeButtonElement;
+    WebElement forgotPasswordButtonElement;
+    WebElement forgotPasswordResetButtonElement;
+    WebElement successMessage;
+    WebElement forgotPasswordCancelButtonElement;
 
     // Constructor
     public LoginPage(WebDriver driver) {
@@ -38,96 +46,74 @@ public class LoginPage
     // Method to enter the username
     public void enterUsername(String username)
     {
-        WebElement usernameElement = driver.findElement(usernameField);
+        usernameElement = driver.findElement(usernameField);
         usernameElement.sendKeys(username);
     }
 
     // Method to enter the password
     public void enterPassword(String password)
     {
-        WebElement passwordElement = driver.findElement(passwordField);
+        passwordElement = driver.findElement(passwordField);
         passwordElement.sendKeys(password);
     }
 
     // Method to click the login button
     public void clickLoginButton()
     {
-        WebElement loginButtonElement = driver.findElement(loginButton);
+        loginButtonElement = driver.findElement(loginButton);
         loginButtonElement.click();
     }
 
     // Method to click on the LinkedIn button and handle new tab
     public void clickLinkedInButton()
     {
-        String originalWindow = driver.getWindowHandle();
-        WebElement linkedInButtonElement = driver.findElement(linkedInButton);
+        linkedInButtonElement = driver.findElement(linkedInButton);
         linkedInButtonElement.click();
-
-
-        Set<String> windowHandles = driver.getWindowHandles();
-        windowHandles.remove(originalWindow);
-
-        String newTabHandle = windowHandles.iterator().next();
-        driver.switchTo().window(newTabHandle);
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
     }
 
     public void clickFacebookButton()
     {
-        String originalWindow = driver.getWindowHandle();
-        WebElement facebookButtonElement = driver.findElement(facebookButton);
+        facebookButtonElement = driver.findElement(facebookButton);
         facebookButtonElement.click();
 
-        Set<String> windowHandles = driver.getWindowHandles();
-        windowHandles.remove(originalWindow);
-
-        String newTabHandle = windowHandles.iterator().next();
-        driver.switchTo().window(newTabHandle);
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
     }
 
     public void clickTwitterButton()
     {
-        String originalWindow = driver.getWindowHandle();
-        WebElement twitterButtonElement = driver.findElement(twitterButton);
+        twitterButtonElement = driver.findElement(twitterButton);
         twitterButtonElement.click();
 
-        Set<String> windowHandles = driver.getWindowHandles();
-        windowHandles.remove(originalWindow);
-
-        String newTabHandle = windowHandles.iterator().next();
-        driver.switchTo().window(newTabHandle);
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
     }
 
     // validate that YouTube button working correctly
     public void clickYoutubeButton()
     {
-        String originalWindow = driver.getWindowHandle();
-        WebElement youtubeButtonElement = driver.findElement(youtubeButton);
+        youtubeButtonElement = driver.findElement(youtubeButton);
         youtubeButtonElement.click();
 
-        Set<String> windowHandles = driver.getWindowHandles();
-        windowHandles.remove(originalWindow);
-
-        String newTabHandle = windowHandles.iterator().next();
-        driver.switchTo().window(newTabHandle);
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
     }
 
     public void clickForgotPasswordButton()
     {
-        WebElement forgotPasswordButtonElement = driver.findElement(forgotPasswordButton);
+        forgotPasswordButtonElement = driver.findElement(forgotPasswordButton);
         forgotPasswordButtonElement.click();
     }
 
     public void clickResetPasswordButton()
     {
-        WebElement forgotPasswordButtonElement = driver.findElement(resetPasswordButton);
-        forgotPasswordButtonElement.click();
+        forgotPasswordResetButtonElement = driver.findElement(resetPasswordButton);
+        forgotPasswordResetButtonElement.click();
     }
 
     public Boolean isResetPasswordSuccessfullyMessageShown()
     {
         try
         {
-            WebElement successMessage = driver.findElement(resetPasswordSuccessfullyMessage);
+            successMessage = driver.findElement(resetPasswordSuccessfullyMessage);
             return true;
         }
         catch (NoSuchElementException e)
@@ -139,8 +125,8 @@ public class LoginPage
 
     public void clickCancelButton()
     {
-        WebElement forgotPasswordButtonElement = driver.findElement(cancelButton);
-        forgotPasswordButtonElement.click();
+        forgotPasswordCancelButtonElement = driver.findElement(cancelButton);
+        forgotPasswordCancelButtonElement.click();
     }
 
 
@@ -159,11 +145,5 @@ public class LoginPage
 
     public String getYoutubePageUrl() {
         return driver.getCurrentUrl();
-    }
-
-    // Method to switch back to the original window
-    public void switchBackToOriginalWindow(String originalWindow) {
-        driver.close(); // Close the current tab
-        driver.switchTo().window(originalWindow); // Switch back to the original tab
     }
 }

@@ -43,7 +43,7 @@ public class InterfaceTests extends BaseTest
     }
 
     // Test case: LVerity Functionality of Profile Icon
-    @Test(priority = 1, description = "Verity Functionality of Profile Icon")
+    @Test(priority = 2, description = "Verity Functionality of Profile Icon")
     public void verifyFunctionalityOfProfileIcon()
     {
         baseTest.login(AdminAccount, AdminPassword);
@@ -82,7 +82,7 @@ public class InterfaceTests extends BaseTest
     }
 
     // Test case: Verify Functionality of Side Bar Button
-    @Test(priority = 3, description = "Verify Functionality of Side Bar Button")
+    @Test(priority = 2, description = "Verify Functionality of Side Bar Button")
     public void verifySideBarButtonFunctionality()
     {
         baseTest.login(AdminAccount, AdminPassword);
@@ -99,52 +99,70 @@ public class InterfaceTests extends BaseTest
     }
 
     // Test case: Verify Functionality of Search text
-    @Test(priority = 4, description = "Verify Functionality of Search text")
+    @Test(priority = 2, description = "Verify Functionality of Search text")
     public void verifySearchFunctionality()
     {
         baseTest.login(AdminAccount, AdminPassword);
         boolean searchResult = false;
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
+        baseTest.setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Admin");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Admin");
 
+        baseTest.setImplicitWaitMillis(500);
+
         searchResult = interfacePage.searchAndVerify("PIM");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - PIM");
+
+        baseTest.setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Leave");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Leave");
 
+        baseTest.setImplicitWaitMillis(500);
+
         searchResult = interfacePage.searchAndVerify("Time");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Time");
+
+        baseTest.setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Recruitment");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Recruitment");
 
+        baseTest.setImplicitWaitMillis(500);
+
         searchResult = interfacePage.searchAndVerify("Performance");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Performance");
+
+        baseTest.setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Directory");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Directory");
 
-        searchResult = interfacePage.searchAndVerify("Maintenance");
-        Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Maintenance");
+        baseTest.setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Buzz");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Buzz");
 
+        baseTest.setImplicitWaitMillis(500);
+
         searchResult = interfacePage.searchAndVerify("My Info");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - My Info");
 
+        baseTest.setImplicitWaitMillis(500);
+
         searchResult = interfacePage.searchAndVerify("Claim");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Claim");
+
+        baseTest.setImplicitWaitMillis(500);
+
+        searchResult = interfacePage.searchAndVerify("Maintenance");
+        Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Maintenance");
     }
 
     // Test case: Verify Functionality of About Button - Admin Role
-    @Test(priority = 5, description = "Verify Functionality of About Button - Admin Role")
+    @Test(priority = 3, description = "Verify Functionality of About Button - Admin Role")
     public void verifyAboutButtonAdminFunctionality()
     {
         baseTest.login(AdminAccount, AdminPassword);
@@ -169,7 +187,7 @@ public class InterfaceTests extends BaseTest
     }
 
     // Test case: Verify Functionality of About Button - ESS Role
-    @Test(priority = 6, description = "Verify Functionality of About Button - ESS Role")
+    @Test(priority = 3, description = "Verify Functionality of About Button - ESS Role")
     public void verifyAboutButtonEssFunctionality()
     {
         baseTest.login(EssUsernameEnabled, EssPasswordEnabled);
@@ -190,7 +208,7 @@ public class InterfaceTests extends BaseTest
     }
 
     // Test case: Verify of Support Button - Admin Role
-    @Test(priority = 7, description = "Verify of Support Button - Admin Role")
+    @Test(priority = 3, description = "Verify of Support Button - Admin Role")
     public void verifySupportButtonAdminFunctionality()
     {
         baseTest.login(AdminAccount, AdminPassword);
@@ -214,7 +232,7 @@ public class InterfaceTests extends BaseTest
     }
 
     // Test case: Verify of Support Button - ESS Role
-    @Test(priority = 8, description = "Verify of Support Button - ESS Role")
+    @Test(priority = 3, description = "Verify of Support Button - ESS Role")
     public void verifyAboutSupportEssFunctionality()
     {
         baseTest.login(EssUsernameEnabled, EssPasswordEnabled);
@@ -237,6 +255,26 @@ public class InterfaceTests extends BaseTest
     }
 
 
+    // TODO
+    // Test case: Change Password - Successful Password Update - Admin Role
+
+    // TODO
+    // Test case: Change Password - Successful Password Update - ESS Role
+
+    // TODO
+    // Test case: Change Password - Mismatch Between Password and Confirm Password
+
+    // TODO
+    // Test case: Change Password - Validate Password Length at Change Password
+
+    // TODO
+    // Test case: Change Password - Validate Presence of Lower-case Letter
+
+    // TODO
+    // Test case: Change Password - Validate Current Password (Incorrect Password)
+
+    // TODO
+    // Test case: Change Password - Verify Functionality of Change Password Button
 
 
 

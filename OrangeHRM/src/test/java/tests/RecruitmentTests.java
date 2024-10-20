@@ -15,7 +15,7 @@ public class RecruitmentTests extends BaseTest {
     RecruitmentPage recruitmentPage;
     BaseTest baseTest;
 
-    // Setup method to initialize WebDriver
+    //// Setup method to initialize WebDriver
     @BeforeMethod
     public void setUp() {
         driver = new ChromeDriver();
@@ -182,7 +182,7 @@ public class RecruitmentTests extends BaseTest {
         String filePath = projectPath + "/TestData/images.png";
         recruitmentPage.uploadResume(filePath);
 
-        // Assert success message is displayed
+        //// Assert success message is displayed
         Assert.assertTrue(recruitmentPage.WrongFileType(), "Wrong File Type");
     }
 

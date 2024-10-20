@@ -2,7 +2,10 @@ package base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import pages.LoginPage;
+
+import java.time.Duration;
 
 
 public class BaseTest
@@ -25,14 +28,20 @@ public class BaseTest
     public String EssPasswordEnabled = "";
     public String UsernameDisabled = "";
     public String PasswordDisabled = "";
+    public String EmptyUsername = "";
+    public String EmptyPassword = "";
+    public String NonExistentUser = "NonExistentUser";
+    public String caseSensitiveUsername = "admin";
 
 
     public String projectPath = System.getProperty("user.dir");
 
 
-    // Locators
+    // Constructor
+    public BaseTest()
+    {
 
-    
+    }
 
     public BaseTest(WebDriver driver)
     {
@@ -48,22 +57,21 @@ public class BaseTest
 
     }
 
-//    @AfterMethod
-//    public void tearDown(ITestResult result) {
-//        // Capture screenshot for every test case
-//        ScreenshotUtils.captureScreenshot(driver);
-//
-//        // Add test result to Allure with screenshot
-//        if (result.getStatus() == ITestResult.FAILURE) {
-//            Allure.addAttachment("Failed Test Screenshot", new ByteArrayInputStream(ScreenshotUtils.captureScreenshot(driver)));
-//        } else {
-//            Allure.addAttachment("Passed Test Screenshot", new ByteArrayInputStream(ScreenshotUtils.captureScreenshot(driver)));
-//        }
-//
-//        // Optionally, close the driver here if you don't want it running for multiple tests
-//        driver.quit();
-//    }
+    public void setImplicitWaitMillis(long timeInMillis) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(timeInMillis));
+    }
 
+
+
+
+    // After each test, quit the browser
+//    @AfterMethod
+//    public void tearDown()
+//    {
+//        if (driver != null) {
+//            driver.quit();
+//        }
+//    }
 
 
 }

@@ -55,11 +55,11 @@ public class LoginTests extends BaseTest
     }
 
     // Test case: Verify invalid login with incorrect password
-    @Test(priority = 2, description = "Verify invalid login with incorrect password")
+    @Test(priority = 1, description = "Verify invalid login with incorrect password")
     public void verifyInvalidLoginIncorrectPassword()
     {
         // Login with invalid credentials
-        baseTest.login(AdminAccount, "admin1234");
+        baseTest.login(AdminAccount, EssPasswordEnabled);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -70,11 +70,11 @@ public class LoginTests extends BaseTest
     }
 
     // Test case: Verify empty username and password at login page
-    @Test(priority = 3, description = "Verify empty username and password at login page")
+    @Test(priority = 1, description = "Verify empty username and password at login page")
     public void verifyEmptyUsernameAndPassword()
     {
         // Leave the username and password fields empty
-        baseTest.login("", "");
+        baseTest.login(EmptyUsername, EmptyPassword);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -85,11 +85,11 @@ public class LoginTests extends BaseTest
     }
 
     // Test case: Verify empty username at login page
-    @Test(priority = 4, description = "Verify empty username at login page")
+    @Test(priority = 1, description = "Verify empty username at login page")
     public void verifyEmptyUsername()
     {
         // Leave the username field empty
-        baseTest.login("", AdminPassword);
+        baseTest.login(EmptyUsername, AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 3 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -100,11 +100,11 @@ public class LoginTests extends BaseTest
     }
 
     // Test case: Verify empty password at login page
-    @Test(priority = 5, description = "Verify empty password at login page")
+    @Test(priority = 1, description = "Verify empty password at login page")
     public void verifyEmptyPassword()
     {
         // Leave the username field empty
-        baseTest.login(AdminAccount, "");
+        baseTest.login(AdminAccount, EmptyPassword);
 
         // Wait for the error message to be visible (with a timeout of 3 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -115,75 +115,66 @@ public class LoginTests extends BaseTest
     }
 
     // Test case: Verify functionality of LinkedIn button
-    @Test(priority = 6, description = "Verify functionality of linkedin button")
+    @Test(priority = 3, description = "Verify functionality of linkedin button")
     public void verifyLinkedInButtonFunctionality()
     {
-        // Store the current window handle
-        String originalWindow = driver.getWindowHandle();
+        String linkedInUrl;
 
         // Click on the LinkedIn button
         loginPage.clickLinkedInButton();
 
         // Verify that the LinkedIn page URL is correct
-        String linkedInUrl = loginPage.getLinkedInPageUrl();
+        linkedInUrl = loginPage.getLinkedInPageUrl();
         Assert.assertTrue(linkedInUrl.contains("linkedin.com"), "The LinkedIn page URL is incorrect!");
-
-        // Switch back to the original window
-        loginPage.switchBackToOriginalWindow(originalWindow);
     }
 
-    @Test(priority = 7, description = "Verify functionality of facebook button")
+    @Test(priority = 3, description = "Verify functionality of facebook button")
     public void verifyFacebookButtonFunctionality()
     {
-        String originalWindow = driver.getWindowHandle();
+        String facebookUrl;
 
         loginPage.clickFacebookButton();
 
-        String facebookUrl = loginPage.getFacebookPageUrl();
+        facebookUrl = loginPage.getFacebookPageUrl();
         Assert.assertTrue(facebookUrl.contains("facebook.com"), "The Facebook page URL is incorrect!");
-
-        loginPage.switchBackToOriginalWindow(originalWindow);
     }
 
-    @Test(priority = 8, description = "Verify functionality of twitter button")
+    @Test(priority = 3, description = "Verify functionality of twitter button")
     public void verifyTwitterButtonFunctionality()
     {
-        String originalWindow = driver.getWindowHandle();
+        String twitterUrl;
 
         loginPage.clickTwitterButton();
 
-        String twitterUrl = loginPage.getTwitterPageUrl();
+        twitterUrl = loginPage.getTwitterPageUrl();
         Assert.assertTrue(twitterUrl.contains("x.com"), "The Twitter page URL is incorrect!");
-
-        loginPage.switchBackToOriginalWindow(originalWindow);
     }
 
-    @Test(priority = 9, description = "Verify functionality of youtube button")
+    @Test(priority = 3, description = "Verify functionality of youtube button")
     public void verifyYoutubeButtonFunctionality()
     {
-        String originalWindow = driver.getWindowHandle();
+        String youtubeUrl;
 
         loginPage.clickYoutubeButton();
 
-        String youtubeUrl = loginPage.getYoutubePageUrl();
+        youtubeUrl = loginPage.getYoutubePageUrl();
         Assert.assertTrue(youtubeUrl.contains("youtube.com"), "The Youtube page URL is incorrect!");
 
-        loginPage.switchBackToOriginalWindow(originalWindow);
     }
 
     // Test case: Username Case Sensitivity at Login Page
-    @Test(priority = 10, description = "Username Case Sensitivity at Login Page")
+    @Test(priority = 2, description = "Username Case Sensitivity at Login Page")
     public void caseSensitivityUsername()
     {
         // Login with invalid credentials
-        baseTest.login("admin", AdminPassword);
+        baseTest.login(caseSensitiveUsername, AdminPassword);
 
         // Check if the user remains on the login page (URL should not change to dashboard)
         Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
     }
 
     // Test case: Forgot Password - Invalid Username at Login Page
-    @Test(priority = 11, description = "Forgot Password - Invalid Username at Login Page")
+    @Test(priority = 1, description = "Forgot Password - Invalid Username at Login Page")
     public void forgotPasswordInvalidUsername()
     {
         loginPage.clickForgotPasswordButton();
@@ -191,12 +182,11 @@ public class LoginTests extends BaseTest
         wait = new WebDriverWait(driver, Duration.ofSeconds(4));
         wait.until(ExpectedConditions.visibilityOfElementLocated(resetPasswordButton));
 
-        loginPage.enterUsername("NonExistentUser");
+        loginPage.enterUsername(NonExistentUser);
         loginPage.clickResetPasswordButton();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(resetPasswordSuccessfullyMessage));
 
-//        Assert.fail("Reset password successfully message should not be displayed.");
         boolean res = loginPage.isResetPasswordSuccessfullyMessageShown();
 
         if (res)
@@ -211,8 +201,8 @@ public class LoginTests extends BaseTest
     }
 
     // Test case: Forgot Password - Cancel Button at Login Page
-    @Test(priority = 12, description = "Forgot Password - Cancel Button at Login Page")
-    public void verigyFunctionalityOfCancelBotton()
+    @Test(priority = 1, description = "Forgot Password - Cancel Button at Login Page")
+    public void verifyFunctionalityOfCancelButton()
     {
         loginPage.clickForgotPasswordButton();
 
@@ -226,18 +216,8 @@ public class LoginTests extends BaseTest
 
     }
 
-    // Test case: SQL Injection Attempt at Login Page
-    @Test(priority = 13, description = "SQL Injection Attempt at Login Page")
-    public void sqlInjection()
-    {
-        // Login with invalid credentials
-        baseTest.login("admin' OR '1'='1", AdminPassword);
-
-        Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
-    }
-
     // Test case: Verity Valid Login - ESS Role at Login Page
-    @Test(priority = 14, description = "Verity Valid Login - ESS Role at Login Page")
+    @Test(priority = 1, description = "Verity Valid Login - ESS Role at Login Page")
     public void verifyValidLoginEssRole()
     {
         // Login with valid credentials

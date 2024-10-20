@@ -12,6 +12,10 @@ public class LogoutPage
     By userDropDownButton = By.xpath("//img[@class='oxd-userdropdown-img']");
     By logoutButton = By.xpath("//a[@href='/web/index.php/auth/logout']");
 
+    // Element
+    WebElement userDropDownButtonElement;
+    WebElement logoutButtonElement;
+
     // Constructor
     public LogoutPage(WebDriver driver)
     {
@@ -20,13 +24,13 @@ public class LogoutPage
 
     public void clickUserDropDownButton()
     {
-        WebElement userDropDownButtonElement = driver.findElement(userDropDownButton);
+        userDropDownButtonElement = driver.findElement(userDropDownButton);
         userDropDownButtonElement.click();
     }
 
     public void clickLogoutButtonButton()
     {
-        WebElement logoutButtonElement = driver.findElement(logoutButton);
+        logoutButtonElement = driver.findElement(logoutButton);
         logoutButtonElement.click();
     }
 

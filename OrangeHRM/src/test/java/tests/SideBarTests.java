@@ -10,7 +10,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.InterfacePage;
 import pages.SideBarPage;
 
 import java.time.Duration;
@@ -23,7 +22,6 @@ public class SideBarTests extends BaseTest
 
     // Locators
     By userDropDownButton = By.xpath("//img[@class='oxd-userdropdown-img']");
-    By AboutButton = By.xpath("//ul[@class=\"oxd-dropdown-menu\"]//li[1]");
 
 
     // Setup method to initialize WebDriver and open the login page
@@ -51,78 +49,56 @@ public class SideBarTests extends BaseTest
         baseTest.login(AdminAccount, AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
         wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
 
 
         // Verify the page is displayed
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("Admin"));
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("Admin"), "Admin page is not displayed");
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
+        baseTest.setImplicitWaitMillis(500);
 
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("recruitment"));
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("recruitment"), "Recruitment page is not displayed");
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("PIM"));
+        baseTest.setImplicitWaitMillis(500);
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("Leave"));
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("PIM"), "PIM page is not displayed");
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("Time"));
+        baseTest.setImplicitWaitMillis(500);
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("Performance"));
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("Time"), "Time page is not displayed");
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("Dashboard"));
+        baseTest.setImplicitWaitMillis(500);
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("Directory"));
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("Performance"), "Performance page is not displayed");
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("Maintenance"));
+        baseTest.setImplicitWaitMillis(500);
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("Buzz"));
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("Dashboard"), "Dashboard page is not displayed");
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("My Info"));
+        baseTest.setImplicitWaitMillis(500);
 
-        // Wait for the error message to be visible (with a timeout of 10 seconds)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
-//
-        Assert.assertTrue(sideBarPage.isThePageDisplayed("My Leave"));
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("Directory"), "Directory page is not displayed");
+
+        baseTest.setImplicitWaitMillis(500);
+
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("Buzz"), "Buzz page is not displayed");
+
+        baseTest.setImplicitWaitMillis(500);
+
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("My Info"), "My Info page is not displayed");
+
+        baseTest.setImplicitWaitMillis(500);
+
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("Claim"), "Claim page is not displayed");
+
+        baseTest.setImplicitWaitMillis(500);
+
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("Leave"), "Leave page is not displayed");
+
+        baseTest.setImplicitWaitMillis(500);
+
+        Assert.assertTrue(sideBarPage.isThePageDisplayed("Maintenance"), "Maintenance page is not displayed");
 
 
 
