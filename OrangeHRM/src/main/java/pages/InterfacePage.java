@@ -26,6 +26,7 @@ public class InterfacePage
     By confirmPasswordField = By.xpath("//div[@class=\"oxd-form-row user-password-row\"]//div[@class=\"oxd-grid-2 orangehrm-full-width-grid\"]//div[@class=\"oxd-grid-item oxd-grid-item--gutters\"]//div[@class='oxd-input-group oxd-input-field-bottom-space']//input[@class='oxd-input oxd-input--active' and @type='password']");
     By saveButton = By.xpath("//button[@class=\"oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space\"]");
     By successMessageChangePassword = By.xpath("//p[contains(@class, 'oxd-text--toast-title')]");
+    By errorMessageChangePassword = By.xpath("//span[@class=\"oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message\"]");
 
     By aboutHeader = By.xpath("//div[@class=\"orangehrm-modal-header\"]//h6[@class=\"oxd-text oxd-text--h6 orangehrm-main-title\"]");
     By closeAboutButton = By.xpath("//button[@class=\"oxd-dialog-close-button oxd-dialog-close-button-position\"]");
@@ -49,6 +50,7 @@ public class InterfacePage
     WebElement successMessageChangePasswordElement;
     WebElement aboutHeaderElement;
     WebElement closeAboutButtonElement;
+    WebElement errorMessageChangePasswordElement;
 
 
     // Constructor
@@ -179,15 +181,17 @@ public class InterfacePage
 
     public boolean isPasswordChanged()
     {
+        String errorMessage;
         try
         {
             successMessageChangePasswordElement = driver.findElement(successMessageChangePassword);
+            errorMessage = successMessageChangePasswordElement.getText();
+
+            return errorMessage.contains("Success");
         }
         catch (NoSuchElementException e)
         {
             return false;
         }
-
-        return true;
     }
 }

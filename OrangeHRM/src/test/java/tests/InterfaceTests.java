@@ -279,6 +279,7 @@ public class InterfaceTests extends BaseTest
     @Test(priority = 3, description = "Change Password - Successful Password Update - ESS Role")
     public void changePasswordEssRole()
     {
+        String errMSG;
         login(EssUsernameEnabled, EssPasswordEnabled);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
@@ -301,23 +302,122 @@ public class InterfaceTests extends BaseTest
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOfElementLocated(successMessageChangePassword) );
 
+
         Assert.assertTrue(interfacePage.isPasswordChanged(), "The password is not changed correctly");
     }
 
     // TODO
     // Test case: Change Password - Mismatch Between Password and Confirm Password
+    @Test(priority = 3, description = "Change Password - Mismatch Between Password and Confirm Password")
+    public void changePasswordMismatchPasswords()
+    {
+        login(EssUsernameEnabled, EssPasswordEnabled);
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
+
+        interfacePage.clickUserDropDownButton();
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(AboutButton) );
+
+        interfacePage.clickChangePasswordButton();
+
+        setImplicitWaitMillis(500);
+
+        interfacePage.setNewPassword(EssPasswordEnabled, EssPasswordEnabled, newPassword);
+
+        setImplicitWaitMillis(1000);
+
+        Assert.assertFalse(interfacePage.isPasswordChanged(), "the password has been changed");
+    }
+
 
     // TODO
     // Test case: Change Password - Validate Password Length at Change Password
+    @Test(priority = 3, description = "Change Password - Validate Password Length at Change Password")
+    public void ValidateChangePasswordLength()
+    {
+        login(EssUsernameEnabled, EssPasswordEnabled);
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
+
+        interfacePage.clickUserDropDownButton();
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(AboutButton) );
+
+        interfacePage.clickChangePasswordButton();
+
+        setImplicitWaitMillis(500);
+
+        interfacePage.setNewPassword(EssPasswordEnabled, validationLengthPassword, validationLengthPassword);
+
+        setImplicitWaitMillis(1000);
+
+        Assert.assertFalse(interfacePage.isPasswordChanged(), "the password has been changed");
+    }
 
     // TODO
     // Test case: Change Password - Validate Presence of Lower-case Letter
+    @Test(priority = 3, description = "Change Password - Validate Presence of Lower-case Letter")
+    public void ValidateChangePasswordCaseSensitivity()
+    {
+        login(EssUsernameEnabled, EssPasswordEnabled);
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
+
+        interfacePage.clickUserDropDownButton();
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(AboutButton) );
+
+        interfacePage.clickChangePasswordButton();
+
+        setImplicitWaitMillis(500);
+
+        interfacePage.setNewPassword(EssPasswordEnabled, validationCaseSensitivePassword, validationCaseSensitivePassword);
+
+        setImplicitWaitMillis(3000);
+
+        Assert.assertFalse(interfacePage.isPasswordChanged(), "the password has been changed");
+    }
 
     // TODO
     // Test case: Change Password - Validate Current Password (Incorrect Password)
+    @Test(priority = 3, description = "Change Password - Validate Current Password (Incorrect Password)")
+    public void ValidateChangePasswordCurrentPassword()
+    {
+        login(EssUsernameEnabled, EssPasswordEnabled);
 
-    // TODO
-    // Test case: Change Password - Verify Functionality of Change Password Button
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
+
+        interfacePage.clickUserDropDownButton();
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(AboutButton) );
+
+        interfacePage.clickChangePasswordButton();
+
+        setImplicitWaitMillis(500);
+
+        interfacePage.setNewPassword(newPassword, newPassword, newPassword);
+
+        setImplicitWaitMillis(10000);
+
+        Assert.assertFalse(interfacePage.isPasswordChanged(), "the password has been changed");
+    }
 
 
 }
