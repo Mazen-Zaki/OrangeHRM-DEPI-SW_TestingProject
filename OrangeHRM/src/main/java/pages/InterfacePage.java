@@ -1,11 +1,6 @@
 package pages;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-import java.util.Set;
 
 public class InterfacePage
 {
@@ -30,11 +25,11 @@ public class InterfacePage
     By newPasswordField = By.xpath("//div[@class=\"oxd-grid-item oxd-grid-item--gutters user-password-cell\"]//div[@class='oxd-input-group oxd-input-field-bottom-space']//input[@class='oxd-input oxd-input--active' and @type='password']");
     By confirmPasswordField = By.xpath("//div[@class=\"oxd-form-row user-password-row\"]//div[@class=\"oxd-grid-2 orangehrm-full-width-grid\"]//div[@class=\"oxd-grid-item oxd-grid-item--gutters\"]//div[@class='oxd-input-group oxd-input-field-bottom-space']//input[@class='oxd-input oxd-input--active' and @type='password']");
     By saveButton = By.xpath("//button[@class=\"oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space\"]");
+    By successMessageChangePassword = By.xpath("//p[contains(@class, 'oxd-text--toast-title')]");
 
     By aboutHeader = By.xpath("//div[@class=\"orangehrm-modal-header\"]//h6[@class=\"oxd-text oxd-text--h6 orangehrm-main-title\"]");
     By closeAboutButton = By.xpath("//button[@class=\"oxd-dialog-close-button oxd-dialog-close-button-position\"]");
 
-    By supportHeader = By.xpath("//h6[@class=\"oxd-text oxd-text--h6 orangehrm-main-title\"]");
 
     // Elements
     WebElement userDropDownButtonElement;
@@ -51,6 +46,7 @@ public class InterfacePage
     WebElement newPasswordFieldElement;
     WebElement confirmPasswordFieldElement;
     WebElement saveButtonElement;
+    WebElement successMessageChangePasswordElement;
     WebElement aboutHeaderElement;
     WebElement closeAboutButtonElement;
 
@@ -154,35 +150,25 @@ public class InterfacePage
         supportButtonElement.click();
     }
 
-    public boolean isSupportHeaderDisplayed()
-    {
-        try
-        {
-            aboutHeaderElement = driver.findElement(supportHeader);
-        }
-        catch (NoSuchElementException e)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     public void clickChangePasswordButton()
     {
         changePasswordButtonElement = driver.findElement(ChangePasswordButton);
         changePasswordButtonElement.click();
     }
 
+
     public void setNewPassword(String currentPassword, String newPassword, String confirmPassword)
     {
         currentPasswordFieldElement = driver.findElement(currentPasswordField);
         newPasswordFieldElement = driver.findElement(newPasswordField);
         confirmPasswordFieldElement = driver.findElement(confirmPasswordField);
+        saveButtonElement = driver.findElement(saveButton);
+
 
         currentPasswordFieldElement.sendKeys(currentPassword);
         newPasswordFieldElement.sendKeys(newPassword);
         confirmPasswordFieldElement.sendKeys(confirmPassword);
+        saveButtonElement.click();
     }
 
 
@@ -191,9 +177,17 @@ public class InterfacePage
     }
 
 
-    // Method to switch back to the original window
-    public void switchBackToOriginalWindow(String originalWindow) {
-        driver.close(); // Close the current tab
-        driver.switchTo().window(originalWindow); // Switch back to the original tab
+    public boolean isPasswordChanged()
+    {
+        try
+        {
+            successMessageChangePasswordElement = driver.findElement(successMessageChangePassword);
+        }
+        catch (NoSuchElementException e)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

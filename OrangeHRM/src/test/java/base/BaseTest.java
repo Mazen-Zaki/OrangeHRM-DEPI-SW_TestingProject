@@ -24,14 +24,15 @@ public class BaseTest
     public String AdminPassword = "admin123";
     public String AdminUsernameEnabled = "";
     public String AdminPasswordEnabled = "";
-    public String EssUsernameEnabled = "";
-    public String EssPasswordEnabled = "";
+    public String EssUsernameEnabled = "shanmuk";
+    public String EssPasswordEnabled = "mm12345";
     public String UsernameDisabled = "";
     public String PasswordDisabled = "";
     public String EmptyUsername = "";
     public String EmptyPassword = "";
     public String NonExistentUser = "NonExistentUser";
     public String caseSensitiveUsername = "admin";
+    public String newPassword = "nn12345";
 
 
     public String projectPath = System.getProperty("user.dir");

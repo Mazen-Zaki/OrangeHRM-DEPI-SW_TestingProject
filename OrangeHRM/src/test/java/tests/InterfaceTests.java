@@ -23,6 +23,8 @@ public class InterfaceTests extends BaseTest
     // Locators
     By userDropDownButton = By.xpath("//img[@class='oxd-userdropdown-img']");
     By AboutButton = By.xpath("//ul[@class=\"oxd-dropdown-menu\"]//li[1]");
+    By successMessageChangePassword = By.xpath("//p[contains(@class, 'oxd-text--toast-title')]");
+
 
 
     // Setup method to initialize WebDriver and open the login page
@@ -257,9 +259,60 @@ public class InterfaceTests extends BaseTest
 
     // TODO
     // Test case: Change Password - Successful Password Update - Admin Role
+    @Test(priority = 3, description = "Change Password - Successful Password Update - Admin Role")
+    public void changePasswordAdminRole()
+    {
+        baseTest.login(AdminUsernameEnabled, AdminPasswordEnabled);
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
+
+        interfacePage.clickUserDropDownButton();
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(AboutButton) );
+
+        interfacePage.clickChangePasswordButton();
+
+        interfacePage.setNewPassword(AdminPasswordEnabled, newPassword, newPassword);
+
+        Assert.assertTrue(interfacePage.isPasswordChanged(), "The password is not changed correctly");
+
+        AdminPasswordEnabled = newPassword;
+    }
+
 
     // TODO
     // Test case: Change Password - Successful Password Update - ESS Role
+    @Test(priority = 3, description = "Change Password - Successful Password Update - ESS Role")
+    public void changePasswordEssRole()
+    {
+        baseTest.login(EssUsernameEnabled, EssPasswordEnabled);
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(userDropDownButton) );
+
+        interfacePage.clickUserDropDownButton();
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(AboutButton) );
+
+        interfacePage.clickChangePasswordButton();
+
+        baseTest.setImplicitWaitMillis(500);
+
+        interfacePage.setNewPassword(EssPasswordEnabled, newPassword, newPassword);
+
+        // Wait for the error message to be visible (with a timeout of 10 seconds)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(successMessageChangePassword) );
+
+        Assert.assertTrue(interfacePage.isPasswordChanged(), "The password is not changed correctly");
+    }
 
     // TODO
     // Test case: Change Password - Mismatch Between Password and Confirm Password
