@@ -20,4 +20,7 @@ public class PIMPage {
      public void clickAddEmployeeTab() {
         driver.findElement(addEmployeeTab).click();
     }
+     public void navigateToReports() {
+        driver.findElement(reportsTab).click();
+    }
 }
