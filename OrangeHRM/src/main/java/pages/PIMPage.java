@@ -8,6 +8,7 @@ public class PIMPage {
 
     // Locator
     private By pimTab = By.xpath("//span[text()='PIM']");
+     private By addEmployeeTab = By.xpath("//a[@href='/web/index.php/pim/addEmployee']");
 
     public PIMPage(WebDriver driver) {
         this.driver = driver;
@@ -15,5 +16,8 @@ public class PIMPage {
 
     public void navigateToPIM() {
         driver.findElement(pimTab).click();
+    }
+     public void clickAddEmployeeTab() {
+        driver.findElement(addEmployeeTab).click();
     }
 }
