@@ -6,24 +6,29 @@ import org.openqa.selenium.WebDriver;
 public class PersonalDetailsPage {
     private WebDriver driver;
 
-    private By firstNameField = By.name("personal[txtEmpFirstName]");
-    private By lastNameField = By.name("personal[txtEmpLastName]");
+    // Locators for fields to update
+    private By firstNameField = By.name("firstName");
+    private By lastNameField = By.name("lastName");
     private By saveButton = By.xpath("//button[text()='Save']");
-    private By successMessage = By.className("oxd-toast-content");
 
     public PersonalDetailsPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void updatePersonalDetails(String firstName, String lastName) {
+    public void updateDetails(String newFirstName, String newLastName) {
         driver.findElement(firstNameField).clear();
-        driver.findElement(firstNameField).sendKeys(firstName);
+        driver.findElement(firstNameField).sendKeys(newFirstName);
         driver.findElement(lastNameField).clear();
-        driver.findElement(lastNameField).sendKeys(lastName);
+        driver.findElement(lastNameField).sendKeys(newLastName);
+    }
+
+    public void saveChanges() {
         driver.findElement(saveButton).click();
     }
 
-    public boolean isSuccessMessageDisplayed() {
-        return driver.findElements(successMessage).size() > 0;
+    public boolean isUpdateSuccessful() {
+        // Add validation logic if there's a success message or check if the new details are displayed.
+        // Assuming success message appears:
+        return driver.findElements(By.xpath("//div[@class='oxd-toast--success']")).size() > 0;
     }
 }

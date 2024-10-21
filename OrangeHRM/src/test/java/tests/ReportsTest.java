@@ -1,89 +1,98 @@
 package tests;
 
-import pages.LoginPage2;
+import base.BaseTest;
+import pages.LoginPage;
 import pages.PIMPage;
 import pages.ReportsPage;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-public class ReportsTest extends BaseTest2 {
+public class ReportsTest extends BaseTest {
 
     public static void main(String[] args) {
         ReportsTest test = new ReportsTest();
         test.setUp();
-        test.runTests();
-        test.tearDown();
-    }
 
-    public void runTests() {
-        testAddReport();
-        testEditReport();
-        testDeleteReport();
+        try {
+            @test
+            test.testAddReport();
+            @test
+            test.testEditReport();
+            @test
+            test.testDeleteReport();
+            @test
+            test.testSearchReport();
+            @test
+            test.testResetButton();
+        } finally {
+            test.tearDown();
+        }
     }
-
+    
     public void testAddReport() {
-        // Step 1: Login
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("Admin", "admin123");
 
-        // Step 2: Navigate to PIM and then to Reports
         PIMPage pimPage = new PIMPage(driver);
         pimPage.navigateToPIM();
+        pimPage.navigateToReports();
 
-        // Step 3: Add a new report
         ReportsPage reportsPage = new ReportsPage(driver);
-        reportsPage.navigateToReports();
-        reportsPage.addReport("Employee Details Report");
+        reportsPage.addNewReport("Sample Report");
 
-        // Verify that the report was added successfully
-        if (reportsPage.isSuccessMessageDisplayed()) {
-            System.out.println("Report added successfully.");
+        Assert.assertTrue("Test Failed: Report not added.", reportsPage.isReportPresent("Sample Report"));
+         System.out.println("Test Passed: Report added successfully.");
+       /* if (reportsPage.isReportPresent("Sample Report")) {
+            System.out.println("Test Passed: Report added successfully.");
         } else {
-            System.out.println("Failed to add report.");
-        }
+            System.out.println("Test Failed: Report not added.");
+        }*/
     }
 
     public void testEditReport() {
-        // Step 1: Login
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin", "admin123");
-
-        // Step 2: Navigate to PIM and then to Reports
-        PIMPage pimPage = new PIMPage(driver);
-        pimPage.navigateToPIM();
-
-        // Step 3: Search and edit the report
         ReportsPage reportsPage = new ReportsPage(driver);
-        reportsPage.navigateToReports();
-        reportsPage.searchReport("Employee Details Report");
-        reportsPage.editReport("Updated Employee Details Report");
+        reportsPage.editReport("Updated Report");
 
-        // Verify that the report was updated successfully
-        if (reportsPage.isSuccessMessageDisplayed()) {
-            System.out.println("Report edited successfully.");
+        Assert.assertTrue("Test Failed: Report not updated.", reportsPage.isReportPresent("Updated Report"));
+        System.out.println("Test Passed: Report updated successfully.");
+
+        /*if (reportsPage.isReportPresent("Updated Report")) {
+            System.out.println("Test Passed: Report updated successfully.");
         } else {
-            System.out.println("Failed to edit report.");
-        }
+            System.out.println("Test Failed: Report not updated.");
+        }*/
     }
 
     public void testDeleteReport() {
-        // Step 1: Login
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin", "admin123");
-
-        // Step 2: Navigate to PIM and then to Reports
-        PIMPage pimPage = new PIMPage(driver);
-        pimPage.navigateToPIM();
-
-        // Step 3: Search and delete the report
         ReportsPage reportsPage = new ReportsPage(driver);
-        reportsPage.navigateToReports();
-        reportsPage.searchReport("Updated Employee Details Report");
         reportsPage.deleteReport();
+        Assert.assertFalse("Test Failed: Report not deleted.", reportsPage.isReportPresent("Updated Report"));
+        System.out.println("Test Passed: Report deleted successfully."); 
 
-        // Verify that the report was deleted successfully
-        if (reportsPage.isSuccessMessageDisplayed()) {
-            System.out.println("Report deleted successfully.");
+        /*if (!reportsPage.isReportPresent("Updated Report")) {
+            System.out.println("Test Passed: Report deleted successfully.");
         } else {
-            System.out.println("Failed to delete report.");
-        }
+            System.out.println("Test Failed: Report not deleted.");
+        }*/
+    }
+
+    public void testSearchReport() {
+                ReportsPage reportsPage = new ReportsPage(driver);
+
+       reportsPage.searchReport("Sample Report");
+
+        Assert.assertTrue("Test Failed: Report not found in search results.", reportsPage.isReportPresent("Sample Report"));
+        System.out.println("Test Passed: Report found in search results.");
+    }
+
+    public void testResetButton() {
+        ReportsPage reportsPage = new ReportsPage(driver);
+        reportsPage.searchReport("Sample Report");
+        reportsPage.clickResetButton();
+
+        // Verify that the search field is cleared (assume it becomes empty or default state).
+        String searchFieldText = driver.findElement(By.xpath("//input[@placeholder='Search...']")).getAttribute("value");
+        Assert.assertTrue("Test Failed: Reset button did not clear the search fields.", searchFieldText.isEmpty());
+        System.out.println("Test Passed: Reset button cleared the search fields.");
     }
 }
