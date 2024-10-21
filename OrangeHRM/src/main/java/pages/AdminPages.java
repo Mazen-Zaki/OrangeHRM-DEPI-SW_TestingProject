@@ -13,6 +13,14 @@ public class AdminPages {
     WebDriver driver;
     WebDriverWait wait;
 
+    // Locators for the elements
+    By userRoleDropdownLocator = By.xpath("//label[text()='User Role']/following::div[@class='oxd-select-text-input']");
+    By statusDropdownLocator = By.xpath("//label[text()='Status']/following::div[@class='oxd-select-text-input']");
+    By dropdownOptionsLocator = By.xpath("//div[@role='listbox']//span");
+    By searchButtonLocator = By.xpath("//button[@type='submit'][normalize-space()='Search']");
+    By resetButtonLocator = By.xpath("//button[normalize-space()='Reset']");
+    By recordsFoundLocator = By.xpath("//span[@class='oxd-text oxd-text--span']");
+
     public AdminPages(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -20,12 +28,11 @@ public class AdminPages {
 
     // Method to select user role from dropdown
     public void selectUserRole(String role) {
-        WebElement userRoleDropdown = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//label[text()='User Role']/following::div[@class='oxd-select-text-input']")));
+        WebElement userRoleDropdown = wait.until(ExpectedConditions.elementToBeClickable(userRoleDropdownLocator));
         userRoleDropdown.click();
 
         // Select role from dropdown options
-        List<WebElement> dropdownOptions = driver.findElements(By.xpath("//div[@role='listbox']//span"));
+        List<WebElement> dropdownOptions = driver.findElements(dropdownOptionsLocator);
         for (WebElement option : dropdownOptions) {
             if (option.getText().equals(role)) {
                 option.click();
@@ -36,12 +43,11 @@ public class AdminPages {
 
     // Method to select status from dropdown
     public void selectStatus(String status) {
-        WebElement statusDropdown = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//label[text()='Status']/following::div[@class='oxd-select-text-input']")));
+        WebElement statusDropdown = wait.until(ExpectedConditions.elementToBeClickable(statusDropdownLocator));
         statusDropdown.click();
 
         // Select status from dropdown options
-        List<WebElement> dropdownOptions = driver.findElements(By.xpath("//div[@role='listbox']//span"));
+        List<WebElement> dropdownOptions = driver.findElements(dropdownOptionsLocator);
         for (WebElement option : dropdownOptions) {
             if (option.getText().equals(status)) {
                 option.click();
@@ -52,28 +58,22 @@ public class AdminPages {
 
     // Method to click the search button
     public void clickSearch() {
-        WebElement searchButton = driver.findElement(By.xpath("//button[@type='submit'][normalize-space()='Search']"));
+        WebElement searchButton = driver.findElement(searchButtonLocator);
         searchButton.click();
     }
 
     // Method to click the reset button
     public void clickReset() {
-        WebElement resetButton = driver.findElement(By.xpath("//button[normalize-space()='Reset']"));
+        WebElement resetButton = driver.findElement(resetButtonLocator);
         resetButton.click();
     }
 
-    // Method to get the number of records found
-    // public String getRecordsFoundText() {
-    // WebElement recordsFoundElement =
-    // driver.findElement(By.xpath("class=\"oxd-text oxd-text--span\""));
-    // return recordsFoundElement.getText();
-    // }
+    // Method to get the "Records Found" text
     public String getRecordsFoundText() {
         // Explicitly wait for the element that contains the 'Records Found' text to be
         // visible
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait for up to 10 seconds
         WebElement recordsFound = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class=\"oxd-text oxd-text--span\"]")));
+                ExpectedConditions.visibilityOfElementLocated(recordsFoundLocator));
 
         // Return the text of the element
         return recordsFound.getText();
@@ -81,12 +81,9 @@ public class AdminPages {
 
     // Method to verify if filters are reset
     public boolean isFilterReset() {
-        // Assuming if the dropdowns are reset to the default, we verify by checking the
-        // default values
-        WebElement userRoleDropdown = driver
-                .findElement(By.xpath("//label[text()='User Role']/following::div[@class='oxd-select-text-input']"));
-        WebElement statusDropdown = driver
-                .findElement(By.xpath("//label[text()='Status']/following::div[@class='oxd-select-text-input']"));
+        // Verify by checking the default values of the dropdowns
+        WebElement userRoleDropdown = driver.findElement(userRoleDropdownLocator);
+        WebElement statusDropdown = driver.findElement(statusDropdownLocator);
 
         return userRoleDropdown.getText().contains("Select") && statusDropdown.getText().contains("Select");
     }

@@ -52,7 +52,7 @@ public class AdminTests {
 
         // Verify the filtered results
         String recordFoundText = adminPages.getRecordsFoundText();
-        Assert.assertTrue(recordFoundText.contains("Record Found"), "Filtered results are not correct.");
+        Assert.assertTrue(recordFoundText.contains("(1) Record Found"), "Filtered results are not correct.");
     }
 
     // Test case: Reset the filters to default values
