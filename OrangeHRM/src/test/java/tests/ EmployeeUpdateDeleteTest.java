@@ -5,6 +5,9 @@ import pages.LoginPage;
 import pages.PIMPage;
 import pages.EmployeeListPage;
 import pages.PersonalDetailsPage;
+import org.testng.annotations.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class EmployeeUpdateDeleteTest extends BaseTest {
 
@@ -13,7 +16,9 @@ public class EmployeeUpdateDeleteTest extends BaseTest {
         test.setUp();
 
         try {
+            @test
             test.testUpdateEmployee();
+            @test
             test.testDeleteEmployee();
         } finally {
             test.tearDown();

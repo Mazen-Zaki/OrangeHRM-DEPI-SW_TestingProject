@@ -4,7 +4,9 @@ import base.BaseTest;
 import pages.LoginPage;
 import pages.PIMPage;
 import pages.AddEmployeePage;
-
+import org.testng.annotations.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 public class EmployeeTest extends BaseTest {
 
     public static void main(String[] args) {
@@ -12,6 +14,7 @@ public class EmployeeTest extends BaseTest {
         test.setUp();
 
         try {
+            @test
             test.testAddEmployee();
         } finally {
             test.tearDown();

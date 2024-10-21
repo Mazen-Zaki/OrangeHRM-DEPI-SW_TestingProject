@@ -4,7 +4,8 @@ import base.BaseTest;
 import pages.LoginPage;
 import pages.PIMPage;
 import pages.ReportsPage;
-
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 public class ReportsTest extends BaseTest {
 
     public static void main(String[] args) {
@@ -12,16 +13,21 @@ public class ReportsTest extends BaseTest {
         test.setUp();
 
         try {
+            @test
             test.testAddReport();
+            @test
             test.testEditReport();
+            @test
             test.testDeleteReport();
+            @test
             test.testSearchReport();
+            @test
             test.testResetButton();
         } finally {
             test.tearDown();
         }
     }
-
+    
     public void testAddReport() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("Admin", "admin123");

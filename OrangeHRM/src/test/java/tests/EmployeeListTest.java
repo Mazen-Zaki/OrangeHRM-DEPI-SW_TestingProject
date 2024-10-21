@@ -4,6 +4,9 @@ import base.BaseTest;
 import pages.LoginPage;
 import pages.PIMPage;
 import pages.EmployeeListPage;
+import org.testng.annotations.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class EmployeeListTest extends BaseTest {
 
@@ -12,9 +15,13 @@ public class EmployeeListTest extends BaseTest {
         test.setUp();
 
         try {
+            @test
             test.testSearchByName();
+            @test
             test.testSearchById();
+            @test
             test.testSearchByNameAndId();
+            @test
             test.testResetFields();
         } finally {
             test.tearDown();
