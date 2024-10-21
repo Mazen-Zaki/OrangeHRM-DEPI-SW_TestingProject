@@ -1,8 +1,13 @@
 package base;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import pages.InterfacePage;
 import pages.LoginPage;
 
 import java.time.Duration;
@@ -15,8 +20,8 @@ public class BaseTest
     // For example, setup and teardown methods
     // This class will be extended by all test classes
 
-    LoginPage loginPage;
-    WebDriver driver;
+    public LoginPage loginPage;
+    public WebDriver driver;
 
     public WebDriverWait wait;
     public String baseUrl = "https://opensource-demo.orangehrmlive.com/";
@@ -40,14 +45,12 @@ public class BaseTest
 
     // Constructor
     public BaseTest()
-    {
-
-    }
+    {}
 
     public BaseTest(WebDriver driver)
     {
-        loginPage = new LoginPage(driver);
-        this.driver = driver;
+//        loginPage = new LoginPage(driver);
+//        this.driver = driver;
     }
 
     public void login(String username, String password)
@@ -58,21 +61,35 @@ public class BaseTest
 
     }
 
-    public void setImplicitWaitMillis(long timeInMillis) {
+    public void setImplicitWaitMillis(long timeInMillis)
+    {
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(timeInMillis));
     }
 
 
+    // Setup method to initialize WebDriver and open the login page
+    @BeforeMethod
+    public void setUp() {
+        // Initialize ChromeDriver (Selenium 4 manages drivers automatically)
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get(baseUrl);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
+
+        // Initialize the login page object
+        loginPage = new LoginPage(driver);
+    }
 
 
     // After each test, quit the browser
-//    @AfterMethod
-//    public void tearDown()
-//    {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @AfterMethod
+    public void tearDown()
+    {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
 
 }

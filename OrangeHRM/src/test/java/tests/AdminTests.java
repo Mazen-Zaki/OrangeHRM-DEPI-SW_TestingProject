@@ -1,5 +1,6 @@
 package tests;
 
+import base.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -8,33 +9,45 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.AdminPages;
 import pages.LoginPage;
+import pages.LogoutPage;
 
 import java.time.Duration;
 
-public class AdminTests {
+public class AdminTests extends BaseTest
+{
 
-    WebDriver driver;
-    LoginPage loginPage;
     AdminPages adminPages;
 
-    // Setup method to initialize WebDriver and open the page
+//    // Setup method to initialize WebDriver and open the page
+//    @BeforeMethod
+//    public void setUp() {
+//        driver = new ChromeDriver();
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//
+//        // Navigate to the login page
+//        driver.get("https://opensource-demo.orangehrmlive.com/");
+//        loginPage = new LoginPage(driver);
+//        adminPages = new AdminPages(driver);
+//
+//        // Log in to the application
+//        loginPage.enterUsername("Admin");
+//        loginPage.enterPassword("admin123");
+//        loginPage.clickLoginButton();
+//
+//        // After login, navigate to the 'System Users' page
+//        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewSystemUsers");
+//    }
+
+    // Initialize LogoutPage in the setup
     @BeforeMethod
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        // Navigate to the login page
-        driver.get("https://opensource-demo.orangehrmlive.com/");
-        loginPage = new LoginPage(driver);
+    public void setUp()
+    {
+        super.setUp();
         adminPages = new AdminPages(driver);
+        login(AdminAccount, AdminPassword);
 
-        // Log in to the application
-        loginPage.enterUsername("Admin");
-        loginPage.enterPassword("admin123");
-        loginPage.clickLoginButton();
-
-        // After login, navigate to the 'System Users' page
+//         After login, navigate to the 'System Users' page
         driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewSystemUsers");
     }
 
@@ -63,13 +76,5 @@ public class AdminTests {
 
         // Verify the filters are reset
         Assert.assertTrue(adminPages.isFilterReset(), "Filters were not reset correctly.");
-    }
-
-    // Cleanup method to close the browser
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
     }
 }

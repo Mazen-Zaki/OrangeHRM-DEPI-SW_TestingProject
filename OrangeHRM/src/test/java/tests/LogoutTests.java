@@ -16,34 +16,25 @@ import java.time.Duration;
 
 public class LogoutTests extends BaseTest
 {
-    WebDriver driver;
     LogoutPage logoutPage;
-    BaseTest baseTest;
 
     // Locators
     By userDropDownButton = By.xpath("//img[@class='oxd-userdropdown-img']");
 
-    // Setup method to initialize WebDriver and open the login page
+
+    // Initialize LogoutPage in the setup
     @BeforeMethod
     public void setUp()
     {
-        // Initialize ChromeDriver (Selenium 4 manages drivers automatically)
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(baseUrl);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
-
-        // Initialize the LogoutPage object
+        super.setUp();
         logoutPage = new LogoutPage(driver);
-        baseTest = new BaseTest(driver);
     }
 
     // Test case: Logout - Verify of Logout Button - Admin Role
     @Test(priority = 1, description = "Logout - Verify of Logout Button - Admin Role")
     public void verifyFunctionalityOfLogoutButtonAdmin()
     {
-        baseTest.login(AdminAccount, AdminPassword);
+        login(AdminAccount, AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -59,7 +50,7 @@ public class LogoutTests extends BaseTest
     @Test(priority = 2, description = "Logout - Verify of Logout Button - ESS Role")
     public void verifyFunctionalityOfLogoutButtonEss()
     {
-        baseTest.login(EssUsernameEnabled, EssPasswordEnabled);
+        login(EssUsernameEnabled, EssPasswordEnabled);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));

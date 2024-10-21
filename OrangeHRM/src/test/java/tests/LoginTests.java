@@ -16,9 +16,7 @@ import java.time.Duration;
 
 public class LoginTests extends BaseTest
 {
-    WebDriver driver;
     LoginPage loginPage;
-    BaseTest baseTest;
 
     // Locators
     By invalidCredentialAlert = By.xpath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text']");
@@ -27,28 +25,33 @@ public class LoginTests extends BaseTest
     By resetPasswordButton = By.xpath("//button[@type=\"submit\"]");
 
 
-    // Setup method to initialize WebDriver and open the login page
-    @BeforeMethod
-    public void setUp()
-    {
-        // Initialize ChromeDriver (Selenium 4 manages drivers automatically)
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(baseUrl);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
-
-        // Initialize the LoginPage object
-        loginPage = new LoginPage(driver);
-        baseTest = new BaseTest(driver);
-    }
+//    // Setup method to initialize WebDriver and open the login page
+//    @BeforeMethod
+//    public void setUp()
+//    {
+//        driver = new ChromeDriver();
+//        baseTest = new BaseTest();
+//        // Initialize the LoginPage object
+//        loginPage = new LoginPage(driver);
+//        // Initialize ChromeDriver (Selenium 4 manages drivers automatically)
+////        driver = new ChromeDriver();
+////        driver.manage().window().maximize();
+////        driver.get(baseUrl);
+////        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+////        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
+//
+//        super.setUp();  // Call the BaseTest setup
+//
+//
+//
+//    }
 
     // Test case: Verify valid login for Admin role
     @Test(priority = 1, description = "Verify valid login for Admin role")
     public void verifyValidLoginAdminRole()
     {
         // Login with valid credentials
-        baseTest.login(AdminAccount, AdminPassword);
+        login(AdminAccount, AdminPassword);
         
         // Check if the user is redirected to the dashboard
         Assert.assertTrue(driver.getCurrentUrl().contains("dashboard"), "Admin dashboard is not displayed.");
@@ -59,7 +62,7 @@ public class LoginTests extends BaseTest
     public void verifyInvalidLoginIncorrectPassword()
     {
         // Login with invalid credentials
-        baseTest.login(AdminAccount, EssPasswordEnabled);
+        login(AdminAccount, EssPasswordEnabled);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -74,7 +77,7 @@ public class LoginTests extends BaseTest
     public void verifyEmptyUsernameAndPassword()
     {
         // Leave the username and password fields empty
-        baseTest.login(EmptyUsername, EmptyPassword);
+        login(EmptyUsername, EmptyPassword);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -89,7 +92,7 @@ public class LoginTests extends BaseTest
     public void verifyEmptyUsername()
     {
         // Leave the username field empty
-        baseTest.login(EmptyUsername, AdminPassword);
+        login(EmptyUsername, AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 3 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -104,7 +107,7 @@ public class LoginTests extends BaseTest
     public void verifyEmptyPassword()
     {
         // Leave the username field empty
-        baseTest.login(AdminAccount, EmptyPassword);
+        login(AdminAccount, EmptyPassword);
 
         // Wait for the error message to be visible (with a timeout of 3 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -167,7 +170,7 @@ public class LoginTests extends BaseTest
     public void caseSensitivityUsername()
     {
         // Login with invalid credentials
-        baseTest.login(caseSensitiveUsername, AdminPassword);
+        login(caseSensitiveUsername, AdminPassword);
 
         // Check if the user remains on the login page (URL should not change to dashboard)
         Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
@@ -221,7 +224,7 @@ public class LoginTests extends BaseTest
     public void verifyValidLoginEssRole()
     {
         // Login with valid credentials
-        baseTest.login(EssUsernameEnabled, EssPasswordEnabled);
+        login(EssUsernameEnabled, EssPasswordEnabled);
 
         // Check if the user is redirected to the dashboard
         Assert.assertTrue(driver.getCurrentUrl().contains("dashboard"), "ESS dashboard is not displayed.");
@@ -232,18 +235,9 @@ public class LoginTests extends BaseTest
     public void verifyInvalidLoginDisabledStatus()
     {
         // Login with invalid credentials
-        baseTest.login(UsernameDisabled, PasswordDisabled);
+        login(UsernameDisabled, PasswordDisabled);
 
         Assert.assertTrue(driver.getCurrentUrl().contains("login"), "User is redirected despite invalid credentials.");
     }
 
-
-    // After each test, quit the browser
-    @AfterMethod
-    public void tearDown()
-    {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
