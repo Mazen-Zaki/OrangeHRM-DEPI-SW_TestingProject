@@ -54,7 +54,7 @@ public class RecruitmentTests extends BaseTest {
     }
 
     // Test case: Verify adding a new candidate with missing required fields
-    @Test(priority = 2, description = "Verify adding a new candidate with missing required fields")
+    @Test(priority = 4, description = "Verify adding a new candidate with missing required fields")
     public void verifyAddCandidateWithMissingFields() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -71,7 +71,7 @@ public class RecruitmentTests extends BaseTest {
     }
 
     // Test case: Verify adding a candidate with invalid email format
-    @Test(priority = 3, description = "Verify adding a candidate with invalid email format")
+    @Test(priority = 4, description = "Verify adding a candidate with invalid email format")
     public void verifyAddCandidateWithInvalidEmail() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -86,7 +86,7 @@ public class RecruitmentTests extends BaseTest {
     }
 
     // Test case: Verify adding a candidate without checking the consent checkbox
-    @Test(priority = 4, description = "Verify adding a candidate without checking consent")
+    @Test(priority = 2, description = "Verify adding a candidate without checking consent")
     public void verifyAddCandidateWithoutConsent() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -102,7 +102,7 @@ public class RecruitmentTests extends BaseTest {
     }
 
     // Test case: Verify (Cancel functionality)
-    @Test(priority = 5, description = "Verify Cancel button")
+    @Test(priority = 2, description = "Verify Cancel button")
     public void verifyFormReset() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -118,7 +118,7 @@ public class RecruitmentTests extends BaseTest {
     }
 
     // Test case: Verify adding a new candidate with Wrong DOA
-    @Test(priority = 6, description = "Verify adding a new candidate with Wrong DOA")
+    @Test(priority = 4, description = "Verify adding a new candidate with Wrong DOA")
     public void verifyAddCandidateWithWrongDoa() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -133,7 +133,7 @@ public class RecruitmentTests extends BaseTest {
 
     }
 
-    @Test(priority = 7, description = "Verify adding a new candidate with Wrong DOA")
+    @Test(priority = 4, description = "Verify adding a new candidate with Wrong DOA")
     public void verifyAddCandidateWithWrongDoaFormat() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -149,7 +149,7 @@ public class RecruitmentTests extends BaseTest {
     }
 
     // Test case: Verify adding a new candidate with Exceeded File Size
-    @Test(priority = 8, description = "Verify adding a new candidate Exceeded File Size")
+    @Test(priority = 4, description = "Verify adding a new candidate Exceeded File Size")
     public void CandidateWithWrongFileSize() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -169,7 +169,7 @@ public class RecruitmentTests extends BaseTest {
     }
 
     // Test case: Verify adding a new candidate with Wrong File Type
-    @Test(priority = 9, description = "Verify adding a new candidate with Wrong File Type")
+    @Test(priority = 4, description = "Verify adding a new candidate with Wrong File Type")
     public void CandidateWithWrongFileType() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
@@ -185,17 +185,6 @@ public class RecruitmentTests extends BaseTest {
         //// Assert success message is displayed
         Assert.assertTrue(recruitmentPage.WrongFileType(), "Wrong File Type");
     }
-
-    // @Test(priority = 10, description = "Verify adding a new vacancy")
-    // public void AddNewVacancy() {
-        
-    //     recruitmentPage.navigateToAddJobVacancy();
-    //     recruitmentPage.VacancyName("DepiAdmin");
-    //     recruitmentPage.JobTitle(); 
-    //     recruitmentPage.AddHiringManager("Peter Mac Anderson");
-    //     recruitmentPage.clickSave();
-        
-    // }
 
     // After each test, quit the browser
     @AfterMethod
