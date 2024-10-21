@@ -2,13 +2,9 @@ package tests;
 
 import base.BaseTest;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 
@@ -25,26 +21,6 @@ public class LoginTests extends BaseTest
     By resetPasswordButton = By.xpath("//button[@type=\"submit\"]");
 
 
-//    // Setup method to initialize WebDriver and open the login page
-//    @BeforeMethod
-//    public void setUp()
-//    {
-//        driver = new ChromeDriver();
-//        baseTest = new BaseTest();
-//        // Initialize the LoginPage object
-//        loginPage = new LoginPage(driver);
-//        // Initialize ChromeDriver (Selenium 4 manages drivers automatically)
-////        driver = new ChromeDriver();
-////        driver.manage().window().maximize();
-////        driver.get(baseUrl);
-////        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-////        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
-//
-//        super.setUp();  // Call the BaseTest setup
-//
-//
-//
-//    }
 
     // Test case: Verify valid login for Admin role
     @Test(priority = 1, description = "Verify valid login for Admin role")
@@ -231,7 +207,7 @@ public class LoginTests extends BaseTest
     }
 
     // Test case: Verity Invalid Login - Disabled Status at Login Page
-    @Test(priority = 15, description = "Verity Invalid Login - Disabled Status at Login Page")
+    @Test(priority = 1, description = "Verity Invalid Login - Disabled Status at Login Page")
     public void verifyInvalidLoginDisabledStatus()
     {
         // Login with invalid credentials

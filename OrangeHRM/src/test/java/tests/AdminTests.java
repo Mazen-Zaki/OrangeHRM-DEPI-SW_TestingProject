@@ -18,28 +18,7 @@ public class AdminTests extends BaseTest
 
     AdminPages adminPages;
 
-//    // Setup method to initialize WebDriver and open the page
-//    @BeforeMethod
-//    public void setUp() {
-//        driver = new ChromeDriver();
-//        driver.manage().window().maximize();
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//
-//        // Navigate to the login page
-//        driver.get("https://opensource-demo.orangehrmlive.com/");
-//        loginPage = new LoginPage(driver);
-//        adminPages = new AdminPages(driver);
-//
-//        // Log in to the application
-//        loginPage.enterUsername("Admin");
-//        loginPage.enterPassword("admin123");
-//        loginPage.clickLoginButton();
-//
-//        // After login, navigate to the 'System Users' page
-//        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewSystemUsers");
-//    }
-
-    // Initialize LogoutPage in the setup
+    // override the setUp method to initialize the AdminPages
     @BeforeMethod
     public void setUp()
     {

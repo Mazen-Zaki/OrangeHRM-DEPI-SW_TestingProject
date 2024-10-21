@@ -47,11 +47,6 @@ public class BaseTest
     public BaseTest()
     {}
 
-    public BaseTest(WebDriver driver)
-    {
-//        loginPage = new LoginPage(driver);
-//        this.driver = driver;
-    }
 
     public void login(String username, String password)
     {

@@ -11,44 +11,34 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.InterfacePage;
+import pages.SideBarPage;
 
 import java.time.Duration;
 
 public class InterfaceTests extends BaseTest
 {
-    WebDriver driver;
     InterfacePage interfacePage;
-    BaseTest baseTest;
 
     // Locators
     By userDropDownButton = By.xpath("//img[@class='oxd-userdropdown-img']");
     By AboutButton = By.xpath("//ul[@class=\"oxd-dropdown-menu\"]//li[1]");
     By successMessageChangePassword = By.xpath("//p[contains(@class, 'oxd-text--toast-title')]");
 
+    
 
-
-    // Setup method to initialize WebDriver and open the login page
+    // override the setUp method to initialize the SideBarPage
     @BeforeMethod
     public void setUp()
     {
-        // Initialize ChromeDriver (Selenium 4 manages drivers automatically)
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(baseUrl);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("username")));
-
-        // Initialize the InterfacePage object
+        super.setUp();
         interfacePage = new InterfacePage(driver);
-        baseTest = new BaseTest(driver);
-
     }
 
     // Test case: LVerity Functionality of Profile Icon
     @Test(priority = 2, description = "Verity Functionality of Profile Icon")
     public void verifyFunctionalityOfProfileIcon()
     {
-        baseTest.login(AdminAccount, AdminPassword);
+        login(AdminAccount, AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -69,7 +59,7 @@ public class InterfaceTests extends BaseTest
     public void verifyUpgradeButtonFunctionality()
     {
         String originalWindow;
-        baseTest.login(AdminAccount, AdminPassword);
+        login(AdminAccount, AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -87,7 +77,7 @@ public class InterfaceTests extends BaseTest
     @Test(priority = 2, description = "Verify Functionality of Side Bar Button")
     public void verifySideBarButtonFunctionality()
     {
-        baseTest.login(AdminAccount, AdminPassword);
+        login(AdminAccount, AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -104,60 +94,60 @@ public class InterfaceTests extends BaseTest
     @Test(priority = 2, description = "Verify Functionality of Search text")
     public void verifySearchFunctionality()
     {
-        baseTest.login(AdminAccount, AdminPassword);
+        login(AdminAccount, AdminPassword);
         boolean searchResult = false;
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Admin");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Admin");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("PIM");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - PIM");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Leave");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Leave");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Time");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Time");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Recruitment");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Recruitment");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Performance");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Performance");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Directory");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Directory");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Buzz");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Buzz");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("My Info");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - My Info");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Claim");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Claim");
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         searchResult = interfacePage.searchAndVerify("Maintenance");
         Assert.assertTrue(searchResult, "The side Bar isn't work correctly - Maintenance");
@@ -167,7 +157,7 @@ public class InterfaceTests extends BaseTest
     @Test(priority = 3, description = "Verify Functionality of About Button - Admin Role")
     public void verifyAboutButtonAdminFunctionality()
     {
-        baseTest.login(AdminAccount, AdminPassword);
+        login(AdminAccount, AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -192,7 +182,7 @@ public class InterfaceTests extends BaseTest
     @Test(priority = 3, description = "Verify Functionality of About Button - ESS Role")
     public void verifyAboutButtonEssFunctionality()
     {
-        baseTest.login(EssUsernameEnabled, EssPasswordEnabled);
+        login(EssUsernameEnabled, EssPasswordEnabled);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -213,7 +203,7 @@ public class InterfaceTests extends BaseTest
     @Test(priority = 3, description = "Verify of Support Button - Admin Role")
     public void verifySupportButtonAdminFunctionality()
     {
-        baseTest.login(AdminAccount, AdminPassword);
+        login(AdminAccount, AdminPassword);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -237,7 +227,7 @@ public class InterfaceTests extends BaseTest
     @Test(priority = 3, description = "Verify of Support Button - ESS Role")
     public void verifyAboutSupportEssFunctionality()
     {
-        baseTest.login(EssUsernameEnabled, EssPasswordEnabled);
+        login(EssUsernameEnabled, EssPasswordEnabled);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -262,7 +252,7 @@ public class InterfaceTests extends BaseTest
     @Test(priority = 3, description = "Change Password - Successful Password Update - Admin Role")
     public void changePasswordAdminRole()
     {
-        baseTest.login(AdminUsernameEnabled, AdminPasswordEnabled);
+        login(AdminUsernameEnabled, AdminPasswordEnabled);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -289,7 +279,7 @@ public class InterfaceTests extends BaseTest
     @Test(priority = 3, description = "Change Password - Successful Password Update - ESS Role")
     public void changePasswordEssRole()
     {
-        baseTest.login(EssUsernameEnabled, EssPasswordEnabled);
+        login(EssUsernameEnabled, EssPasswordEnabled);
 
         // Wait for the error message to be visible (with a timeout of 10 seconds)
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -303,7 +293,7 @@ public class InterfaceTests extends BaseTest
 
         interfacePage.clickChangePasswordButton();
 
-        baseTest.setImplicitWaitMillis(500);
+        setImplicitWaitMillis(500);
 
         interfacePage.setNewPassword(EssPasswordEnabled, newPassword, newPassword);
 
@@ -330,14 +320,4 @@ public class InterfaceTests extends BaseTest
     // Test case: Change Password - Verify Functionality of Change Password Button
 
 
-
-
-    // After each test, quit the browser
-    @AfterMethod
-    public void tearDown()
-    {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
