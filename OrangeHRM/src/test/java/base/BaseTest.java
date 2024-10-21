@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import pages.InterfacePage;
 import pages.LoginPage;
 
 import java.time.Duration;
@@ -29,7 +28,7 @@ public class BaseTest
     public String AdminPassword = "admin123";
     public String AdminUsernameEnabled = "";
     public String AdminPasswordEnabled = "";
-    public String EssUsernameEnabled = "shanmuk";
+    public String EssUsernameEnabled = "FMLName";
     public String EssPasswordEnabled = "mm12345";
     public String UsernameDisabled = "";
     public String PasswordDisabled = "";
@@ -38,6 +37,8 @@ public class BaseTest
     public String NonExistentUser = "NonExistentUser";
     public String caseSensitiveUsername = "admin";
     public String newPassword = "nn12345";
+    public String validationLengthPassword = "nn123";
+    public String validationCaseSensitivePassword = "123456789";
 
 
     public String projectPath = System.getProperty("user.dir");
