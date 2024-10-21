@@ -66,7 +66,6 @@ public class ReportsTest extends BaseTest {
     public void testDeleteReport() {
         ReportsPage reportsPage = new ReportsPage(driver);
         reportsPage.deleteReport();
-
         Assert.assertFalse("Test Failed: Report not deleted.", reportsPage.isReportPresent("Updated Report"));
         System.out.println("Test Passed: Report deleted successfully."); 
 
