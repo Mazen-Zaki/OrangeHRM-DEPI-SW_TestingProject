@@ -12,7 +12,7 @@ import java.time.Duration;
 
 public class LoginTests extends BaseTest
 {
-    LoginPage loginPage;
+    //LoginPage loginPage;
 
     // Locators
     By invalidCredentialAlert = By.xpath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text']");

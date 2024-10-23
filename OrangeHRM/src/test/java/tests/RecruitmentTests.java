@@ -1,13 +1,10 @@
 package tests;
 
 import base.BaseTest;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.AdminPages;
 import pages.RecruitmentPage;
 import java.time.Duration;
 
@@ -29,6 +26,7 @@ public class RecruitmentTests extends BaseTest {
     public void verifyAddNewCandidate() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Fill in the candidate form with valid data
         recruitmentPage.enterFirstName("Depi");
         recruitmentPage.enterMiddleName("Depi");
