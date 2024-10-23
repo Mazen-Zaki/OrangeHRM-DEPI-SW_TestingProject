@@ -23,8 +23,8 @@ public class TimeTests {
     LoginPage loginPage;
     TimePage timePage;
     WebDriverWait wait;
-    String punchInDate = "2024-17-10";
-    String punchOutDate = "2024-18-10";
+    String punchInDate = "2024-23-10";
+    String punchOutDate = "2024-23-10";
     String punchInTime = "02:21 AM";
     String punchOutTime = "02:22 AM";
     String newAddedName="myName4";

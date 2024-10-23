@@ -38,9 +38,6 @@ public class RecruitmentPage {
     By attachmentSizeExceeded = By
             .xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[4]/div/div/div/div/span");
     By wrongFileType = By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[4]/div/div/div/div/span");
-    By vacancyNameField = By
-            .xpath("//div[contains(@class, 'oxd-input-group')]//input[contains(@class, 'oxd-input--error')]");
-    By hiringManagerField = By.xpath("//input[@placeholder=\"Type for hints...\"]");
 
     By nameField = By.xpath("/html/body/div/div[1]/div[2]/div[2]/div[1]/form/div[1]/div[1]/div/div[2]/p");
 
@@ -184,18 +181,6 @@ public class RecruitmentPage {
     // Method to check if the wrong file type was uploaded
     public boolean WrongFileType() {
         return driver.findElements(wrongFileType).size() > 0;
-    }
-
-    // Method to enter the vacancy name
-    public void VacancyName(String vacancyName) {
-        WebElement vacancyNameElement = driver.findElement(vacancyNameField);
-        vacancyNameElement.sendKeys(vacancyName);
-    }
-
-    // Method to add a hiring manager
-    public void AddHiringManager(String hiringManager) {
-        WebElement hiringManagerElement = driver.findElement(hiringManagerField);
-        hiringManagerElement.sendKeys(hiringManager);
     }
 
     public String GetName() {

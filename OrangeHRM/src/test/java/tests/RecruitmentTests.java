@@ -1,24 +1,17 @@
 package tests;
 
 import base.BaseTest;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.AdminPages;
 import pages.RecruitmentPage;
-import java.time.Duration;
 
 public class RecruitmentTests extends BaseTest {
     RecruitmentPage recruitmentPage;
 
-
     // Override the setUp method to initialize the RecruitmentPage
     @BeforeMethod
-    public void setUp()
-    {
+    public void setUp() {
         super.setUp();
         recruitmentPage = new RecruitmentPage(driver);
         login(AdminAccount, AdminPassword);
@@ -29,6 +22,7 @@ public class RecruitmentTests extends BaseTest {
     public void verifyAddNewCandidate() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Fill in the candidate form with valid data
         recruitmentPage.enterFirstName("Depi");
         recruitmentPage.enterMiddleName("Depi");
@@ -46,7 +40,7 @@ public class RecruitmentTests extends BaseTest {
         recruitmentPage.checkConsent();
         recruitmentPage.clickSave();
         // Assert success message is displayed
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        setImplicitWaitMillis(10000);
         Assert.assertEquals("Depi Depi Depi", recruitmentPage.GetName(), "The username does not match!");
     }
 
@@ -55,6 +49,7 @@ public class RecruitmentTests extends BaseTest {
     public void verifyAddCandidateWithMissingFields() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Leave some required fields empty
         recruitmentPage.enterFirstName("");
         recruitmentPage.enterLastName("");
@@ -72,6 +67,7 @@ public class RecruitmentTests extends BaseTest {
     public void verifyAddCandidateWithInvalidEmail() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Enter invalid email format
         recruitmentPage.enterFirstName("Depi");
         recruitmentPage.enterLastName("Depi");
@@ -87,6 +83,7 @@ public class RecruitmentTests extends BaseTest {
     public void verifyAddCandidateWithoutConsent() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Enter valid data but don't check consent checkbox
         recruitmentPage.enterFirstName("Depi");
         recruitmentPage.enterMiddleName("Depi");
@@ -95,6 +92,7 @@ public class RecruitmentTests extends BaseTest {
         recruitmentPage.enterContactNumber("1234567890");
         recruitmentPage.clickSave();
         // Assert that consent error message is displayed
+        setImplicitWaitMillis(5000);
         Assert.assertEquals("Depi Depi Depi", recruitmentPage.GetName(), "The username does not match!");
     }
 
@@ -103,6 +101,7 @@ public class RecruitmentTests extends BaseTest {
     public void verifyFormReset() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Enter some data and then click Cancel
         recruitmentPage.enterFirstName("Depi");
         recruitmentPage.enterEmail("Depi@test.com");
@@ -119,6 +118,7 @@ public class RecruitmentTests extends BaseTest {
     public void verifyAddCandidateWithWrongDoa() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Leave some required fields empty
         recruitmentPage.enterFirstName("Depi");
         recruitmentPage.enterLastName("Depi");
@@ -134,6 +134,7 @@ public class RecruitmentTests extends BaseTest {
     public void verifyAddCandidateWithWrongDoaFormat() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Leave some required fields empty
         recruitmentPage.enterFirstName("Depi");
         recruitmentPage.enterLastName("Depi");
@@ -150,6 +151,7 @@ public class RecruitmentTests extends BaseTest {
     public void CandidateWithWrongFileSize() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Fill in the candidate form with valid data
         recruitmentPage.enterFirstName("Depi");
         recruitmentPage.enterLastName("Depi");
@@ -170,6 +172,7 @@ public class RecruitmentTests extends BaseTest {
     public void CandidateWithWrongFileType() {
         // Navigate to Add Candidate page
         recruitmentPage.navigateToAddCandidatePage();
+        setImplicitWaitMillis(1000);
         // Fill in the candidate form with valid data
         recruitmentPage.enterFirstName("Depi");
         recruitmentPage.enterLastName("Depi");
