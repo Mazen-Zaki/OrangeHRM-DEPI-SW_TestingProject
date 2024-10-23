@@ -1,6 +1,11 @@
 package tests;
 
 import base.BaseTest;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeMethod;
+import pages.AddEmployeePage;
 import pages.LoginPage;
 import pages.PIMPage;
 import pages.EmployeeListPage;
@@ -8,95 +13,78 @@ import org.testng.annotations.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.time.Duration;
+
 public class EmployeeListTest extends BaseTest {
+    EmployeeListPage  EmployeeListPage;
+    PIMPage pimPage;
+    //public WebDriver driver;
 
-    public static void main(String[] args) {
-        EmployeeListTest test = new EmployeeListTest();
-        test.setUp();
-
-        try {
-            @test
-            test.testSearchByName();
-            @test
-            test.testSearchById();
-            @test
-            test.testSearchByNameAndId();
-            @test
-            test.testResetFields();
-        } finally {
-            test.tearDown();
-        }
+    @BeforeMethod
+    public void setUp() {
+        super.setUp();
+        EmployeeListPage=new EmployeeListPage(driver);
+        pimPage = new PIMPage(driver);
+        login(AdminAccount, AdminPassword);
     }
 
+    @Test
     public void testSearchByName() {
         // Step 1: Login
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin", "admin123");
+        //LoginPage loginPage = new LoginPage(driver);
+
+        login("Admin", "admin123");
 
         // Step 2: Navigate to PIM
-        PIMPage pimPage = new PIMPage(driver);
         pimPage.navigateToPIM();
-
+        pimPage.navigateToEmployeeTab();
         // Step 3: Search by name
-        EmployeeListPage employeeListPage = new EmployeeListPage(driver);
-        employeeListPage.searchByName("John Doe");
+        EmployeeListPage.searchByName("John Doe");
 
         // Verify that search results are displayed
-        if (employeeListPage.isSearchResultDisplayed()) {
+        if (EmployeeListPage.isSearchResultDisplayed()) {
             System.out.println("Test Passed: Search by name successful.");
         } else {
             System.out.println("Test Failed: No results found for search by name.");
         }
     }
-
+    @Test
     public void testSearchById() {
         // Step 1: Login and Navigate to PIM
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin", "admin123");
-        PIMPage pimPage = new PIMPage(driver);
+       login("Admin", "admin123");
         pimPage.navigateToPIM();
-
-        // Step 3: Search by ID
-        EmployeeListPage employeeListPage = new EmployeeListPage(driver);
-        employeeListPage.searchById("12345");
+        pimPage.navigateToEmployeeTab();
+        EmployeeListPage.searchById("12345");
 
         // Verify that search results are displayed
-        if (employeeListPage.isSearchResultDisplayed()) {
+        if (EmployeeListPage.isSearchResultDisplayed()) {
             System.out.println("Test Passed: Search by ID successful.");
         } else {
             System.out.println("Test Failed: No results found for search by ID.");
         }
     }
-
+    @Test
     public void testSearchByNameAndId() {
         // Step 1: Login and Navigate to PIM
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin", "admin123");
-        PIMPage pimPage = new PIMPage(driver);
+        login("Admin", "admin123");
         pimPage.navigateToPIM();
-
-        // Step 3: Search by name and ID
-        EmployeeListPage employeeListPage = new EmployeeListPage(driver);
-        employeeListPage.searchByNameAndId("John Doe", "12345");
+        pimPage.navigateToEmployeeTab();
+        EmployeeListPage.searchByNameAndId("John Doe", "12345");
 
         // Verify that search results are displayed
-        if (employeeListPage.isSearchResultDisplayed()) {
+        if (EmployeeListPage.isSearchResultDisplayed()) {
             System.out.println("Test Passed: Search by name and ID successful.");
         } else {
             System.out.println("Test Failed: No results found for search by name and ID.");
         }
     }
-
+    @Test
     public void testResetFields() {
         // Step 1: Login and Navigate to PIM
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin", "admin123");
-        PIMPage pimPage = new PIMPage(driver);
+        login("Admin", "admin123");
         pimPage.navigateToPIM();
-
-        // Step 3: Perform reset
-        EmployeeListPage employeeListPage = new EmployeeListPage(driver);
-        employeeListPage.resetFields();
+        pimPage.navigateToEmployeeTab();
+        EmployeeListPage.resetFields();
 
         // Verify that fields are cleared (Check if the fields are empty)
         if (driver.findElement(By.xpath("//input[@placeholder='Type for hints...']")).getAttribute("value").isEmpty() &&
